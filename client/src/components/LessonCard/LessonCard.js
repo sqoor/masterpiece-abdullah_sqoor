@@ -10,7 +10,7 @@ export default function LessonCard(props) {
   }
 
   return (
-    <div className="mt-5 mx-2 col-3">
+    <div className="mt-5 mx-2 col-12">
       <div className="card" style={{ width: "18rem" }}>
         <img src="..." className="card-img-top" alt="..." />
         <div className="card-body">
