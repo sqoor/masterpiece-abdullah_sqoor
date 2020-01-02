@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import FailMessage from "../FailMessage/FailMessage";
-import PassMessage from "../PassMessage/PassMessage";
+import Message from "../Message/Message";
 
 export default class TextQuestion extends Component {
   state = {
-    answerState: "",
+    questionStatus: "",
     hasChoosedAnswer: false
   };
 
@@ -16,15 +16,13 @@ export default class TextQuestion extends Component {
 
     const { answer } = this.props;
     const choice = e.target.name;
-    const answerState = choice === answer ? "pass" : "fail";
-
-    this.setState({ answerState, hasChoosedAnswer: true });
+    
+    const questionStatus = choice === answer ? "pass" : "fail";
+    this.setState({ questionStatus, hasChoosedAnswer: true });
   };
 
   moveNextQuestion = state => {
     const { passQuestion, retryQuestion } = this.props;
-
-    console.log(state, "moved to next question");
 
     state === "pass" ? passQuestion() : retryQuestion();
     this.setState({ hasChoosedAnswer: false });
@@ -32,17 +30,13 @@ export default class TextQuestion extends Component {
 
   render() {
     const { checkAnswer, moveNextQuestion } = this;
-    const { answerState, hasChoosedAnswer } = this.state;
+    const { questionStatus, hasChoosedAnswer } = this.state;
     const { answer, question, choices } = this.props;
-    const message = !hasChoosedAnswer ? null : answerState === "pass" ? (
-      <PassMessage
+    const message = hasChoosedAnswer ? (
+      <Message
         correctAnswer={answer}
+        message={questionStatus}
         moveNext={() => moveNextQuestion("pass")}
-      />
-    ) : answerState === "fail" ? (
-      <FailMessage
-        correctAnswer={answer}
-        moveNext={() => moveNextQuestion("fail")}
       />
     ) : null;
 
