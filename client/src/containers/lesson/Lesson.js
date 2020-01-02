@@ -38,38 +38,41 @@ export default class Lesson extends Component {
     resutls: []
   };
 
-  showQuestion() {
-    for (let question of this.state.questions) {
-      switch (question.type) {
-        case "text":
-          return (
-            <TextQuestion
-              {...question}
-              passQuestion={this.passQuestion}
-              retryQuestion={this.retryQuestion}
-            />
-          );
-        case "audio":
-          return (
-            <AudioQuestion
-              {...question}
-              passQuestion={this.passQuestion}
-              retryQuestion={this.retryQuestion}
-            />
-          );
-        case "video":
-          return (
-            <VideoQuestion
-              {...question}
-              passQuestion={this.passQuestion}
-              retryQuestion={this.retryQuestion}
-            />
-          );
-        default:
-          throw new Error("Question type is not recognized");
-      }
+  showQuestion = () => {
+    const questions = this.state.questions;
+    if (questions.length < 1) return null;
+
+    const question = questions[0];
+
+    switch (question.type) {
+      case "text":
+        return (
+          <TextQuestion
+            {...question}
+            passQuestion={this.passQuestion}
+            retryQuestion={this.retryQuestion}
+          />
+        );
+      case "audio":
+        return (
+          <AudioQuestion
+            {...question}
+            passQuestion={this.passQuestion}
+            retryQuestion={this.retryQuestion}
+          />
+        );
+      case "video":
+        return (
+          <VideoQuestion
+            {...question}
+            passQuestion={this.passQuestion}
+            retryQuestion={this.retryQuestion}
+          />
+        );
+      default:
+        throw new Error("Question type is not recognized");
     }
-  }
+  };
 
   passQuestion = () => {
     this.setState(prevState => {
@@ -89,8 +92,8 @@ export default class Lesson extends Component {
   };
 
   render() {
+    const { showQuestion } = this;
     const { id, name, image, progress } = this.props.location.state;
-    const { questions } = this.state;
     return (
       <div>
         <h1>Module info</h1>
@@ -98,34 +101,7 @@ export default class Lesson extends Component {
         <p>name: {name}</p>
         <p>progress: {progress}</p>
         <hr className="bg-danger w-75 my-5" />
-        <div className="border">
-          {this.showQuestion()}
-          {/* {questions.map(
-            q => {
-              return q.type === "text" ? (
-                <TextQuestion />
-              ) : q.type === "audio" ? (
-                <AudioQuestion />
-              ) : q.type === "video" ? (
-                <VideoQuestion />
-              ) : null;
-            }
-            
-        //   <div>
-        //       <div className="container">
-        //         <div className="row">
-        //           <h3 className="text-center">{q.question}</h3>
-        //         </div>
-        //         <div className="row">
-        //           {q.choices.map(c => (
-        //             <div className="col-5 m-1 btn btn-outline-dark">{c}</div>
-        //           ))}
-        //         </div>
-        //       </div>
-        //     </div>
-        // 
-          )} */}
-        </div>
+        <div className="border">{showQuestion()}</div>
       </div>
     );
   }
