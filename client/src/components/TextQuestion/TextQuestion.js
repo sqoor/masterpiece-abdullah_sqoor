@@ -26,21 +26,21 @@ export default class TextQuestion extends Component {
 
     const { answer } = this.props;
     const choice = e.target.name;
-
     const questionStatus = choice === answer ? "pass" : "fail";
+
     await this.setState({
       questionStatus,
       hasChoosedAnswer: true,
       choosedAnswerBtn: e.target
     });
 
-    this.highlightChoosedAnswerBtn(); // TODO:
+    this.highlightChoosedAnswerBtn();
   };
 
-  moveNextQuestion = state => {
+  moveNextQuestion = () => {
     const { passQuestion, retryQuestion } = this.props;
 
-    state === "pass" ? passQuestion() : retryQuestion();
+    this.questionStatus === "pass" ? passQuestion() : retryQuestion();
     this.setState({ hasChoosedAnswer: false });
 
     this.removeHighlightChoosedAnswerBtn();
@@ -54,7 +54,7 @@ export default class TextQuestion extends Component {
       <Message
         correctAnswer={answer}
         message={questionStatus}
-        moveNext={() => moveNextQuestion("pass")}
+        moveNext={() => moveNextQuestion()}
       />
     ) : null;
 
@@ -90,4 +90,4 @@ export default class TextQuestion extends Component {
 // - highlight the choosed answer
 // - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
 
-// BUG - no looping the wrongly answered question.
+// FIXED - BUG - no looping the wrongly answered question.
