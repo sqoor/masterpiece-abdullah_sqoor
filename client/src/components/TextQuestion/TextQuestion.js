@@ -40,7 +40,7 @@ export default class TextQuestion extends Component {
   moveNextQuestion = () => {
     const { passQuestion, retryQuestion } = this.props;
 
-    this.questionStatus === "pass" ? passQuestion() : retryQuestion();
+    this.state.questionStatus === "pass" ? passQuestion() : retryQuestion();
     this.setState({ hasChoosedAnswer: false });
 
     this.removeHighlightChoosedAnswerBtn();
@@ -64,7 +64,7 @@ export default class TextQuestion extends Component {
         <p>{question}</p>
         <form>
           <div className="container">
-            <div className="row">
+            <div className="row d-flex justify-content-center">
               {choices.map(choice => (
                 <Choice
                   choice={choice}
@@ -76,7 +76,7 @@ export default class TextQuestion extends Component {
             </div>
           </div>
         </form>
-        <div className="message">{message}</div>
+        <div className="message m-3">{message}</div>
       </>
     );
   }
@@ -87,7 +87,6 @@ export default class TextQuestion extends Component {
 // DONE - refactor passMessage and failMessage same compoent only message changes.
 // DONE - unclickable choices after choosing an answer.
 // DONE - highlight the correct and wrong answers after choosing one.
-// - highlight the choosed answer
-// - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
-
 // FIXED - BUG - no looping the wrongly answered question.
+// DONE - highlight the choosed answer
+// DONE - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
