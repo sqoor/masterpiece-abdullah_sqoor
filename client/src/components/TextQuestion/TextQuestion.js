@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import FailMessage from "../FailMessage/FailMessage";
 import Message from "../Message/Message";
 
 export default class TextQuestion extends Component {
@@ -16,7 +15,7 @@ export default class TextQuestion extends Component {
 
     const { answer } = this.props;
     const choice = e.target.name;
-    
+
     const questionStatus = choice === answer ? "pass" : "fail";
     this.setState({ questionStatus, hasChoosedAnswer: true });
   };
@@ -52,6 +51,7 @@ export default class TextQuestion extends Component {
                   onClick={checkAnswer.bind(choice)}
                   name={choice}
                   className="col-5 m-1 btn btn-outline-dark"
+                  disabled={hasChoosedAnswer}
                 >
                   {choice}
                 </button>
@@ -65,10 +65,9 @@ export default class TextQuestion extends Component {
   }
 }
 
-// 1- destroy components message when moving to the next question - Done
-// 2- when choosed a questions do not let choose another - Done
-// (that's will change messge maybe the answer too)
-// 3- unclickable choices after choosing an answer -
-// 4- highlight the correct and wrong answers after choosing one.
-
-// 5- refactor passMessage and failMessage same compoent only message changes.
+// DONE - destroy components message when moving to the next question.
+// DONE - when choosed a questions do not let choose another.
+// DONE - refactor passMessage and failMessage same compoent only message changes.
+// DONE - unclickable choices after choosing an answer.
+// - highlight the correct and wrong answers after choosing one.
+// - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
