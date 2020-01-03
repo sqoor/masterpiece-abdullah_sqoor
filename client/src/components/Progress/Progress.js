@@ -1,17 +1,19 @@
 import React from "react";
 
 export default function Progress(props) {
+  const { progress } = props;
+
   return (
     <div className="progress">
       <div
         className="progress-bar"
         role="progressbar"
-        style={{ width: `${props.progress}%` }}
-        aria-valuenow={props.propgress}
+        style={{ width: `${progress}%` }}
+        aria-valuenow={progress}
         aria-valuemin="0"
         aria-valuemax="100"
       >
-        {props.progress}%
+        {/* {progress}% */}
       </div>
     </div>
   );

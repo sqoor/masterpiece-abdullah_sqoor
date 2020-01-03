@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import TextQuestion from "../../components/TextQuestion/TextQuestion";
 import AudioQuestion from "../../components/AudioQuestion/AudioQuestion";
 import VideoQuestion from "../../components/VideoQuestion/VideoQuestion";
+import Progress from "../../components/Progress/Progress";
 
 export default class Lesson extends Component {
   state = {
+    questionsCount: 4,
     questions: [
       {
         id: 1,
@@ -97,9 +99,22 @@ export default class Lesson extends Component {
     return (
       <div>
         <h1>Module info</h1>
+        <div className="w-75 m-auto">
+          <Progress
+            progress={
+              (this.state.questionsCount - this.state.questions.length) *
+              (100 / this.state.questionsCount)
+            }
+          />
+          <p>
+            Exercise Progress:{" "}
+            {(this.state.questionsCount - this.state.questions.length) *
+              (100 / this.state.questionsCount)}
+          </p>
+        </div>
         <p>id: {id}</p>
         <p>name: {name}</p>
-        <p>progress: {progress}</p>
+        <p>total unit progress: {progress}</p>
         <hr className="bg-danger w-75 my-5" />
         <div className="border">{showQuestion()}</div>
       </div>
