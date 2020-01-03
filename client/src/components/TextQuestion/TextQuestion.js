@@ -1,15 +1,26 @@
 import React, { Component } from "react";
 
 import Message from "../Message/Message";
+import Choice from "../Choice/Choice";
 
 export default class TextQuestion extends Component {
   state = {
     questionStatus: "",
-    hasChoosedAnswer: false
+    hasChoosedAnswer: false,
+    choosedAnswerBtn: null
   };
 
-  checkAnswer = e => {
+  highlightChoosedAnswerBtn() {
+    this.state.choosedAnswerBtn.style.border = "6px black solid";
+  }
+
+  removeHighlightChoosedAnswerBtn() {
+    this.state.choosedAnswerBtn.style.border = "";
+  }
+
+  checkAnswer = async e => {
     e.preventDefault();
+
     const { hasChoosedAnswer } = this.state;
     if (hasChoosedAnswer) return;
 
@@ -17,7 +28,13 @@ export default class TextQuestion extends Component {
     const choice = e.target.name;
 
     const questionStatus = choice === answer ? "pass" : "fail";
-    this.setState({ questionStatus, hasChoosedAnswer: true });
+    await this.setState({
+      questionStatus,
+      hasChoosedAnswer: true,
+      choosedAnswerBtn: e.target
+    });
+
+    this.highlightChoosedAnswerBtn(); // TODO:
   };
 
   moveNextQuestion = state => {
@@ -25,6 +42,8 @@ export default class TextQuestion extends Component {
 
     state === "pass" ? passQuestion() : retryQuestion();
     this.setState({ hasChoosedAnswer: false });
+
+    this.removeHighlightChoosedAnswerBtn();
   };
 
   render() {
@@ -47,14 +66,12 @@ export default class TextQuestion extends Component {
           <div className="container">
             <div className="row">
               {choices.map(choice => (
-                <button
-                  onClick={checkAnswer.bind(choice)}
-                  name={choice}
-                  className="col-5 m-1 btn btn-outline-dark"
-                  disabled={hasChoosedAnswer}
-                >
-                  {choice}
-                </button>
+                <Choice
+                  choice={choice}
+                  checkAnswer={checkAnswer}
+                  hasChoosedAnswer={hasChoosedAnswer}
+                  answer={answer}
+                />
               ))}
             </div>
           </div>
@@ -69,5 +86,8 @@ export default class TextQuestion extends Component {
 // DONE - when choosed a questions do not let choose another.
 // DONE - refactor passMessage and failMessage same compoent only message changes.
 // DONE - unclickable choices after choosing an answer.
-// - highlight the correct and wrong answers after choosing one.
+// DONE - highlight the correct and wrong answers after choosing one.
+// - highlight the choosed answer
 // - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
+
+// BUG - no looping the wrongly answered question.
