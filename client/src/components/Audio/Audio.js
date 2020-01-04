@@ -17,7 +17,7 @@ export default function Audio(props) {
 
   return (
     <button className="btn btn-light btn-sm" onClick={read}>
-      <FontAwesomeIcon icon={faPlayCircle} size="2x" />
+      <FontAwesomeIcon icon={faVolumeUp} size="2x" />
     </button>
   );
 }
