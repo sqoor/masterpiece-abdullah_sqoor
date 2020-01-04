@@ -140,3 +140,62 @@ export default class Lesson extends Component {
 // 6- type in English question in French (translate)
 // 7- complete sentence (plurlas singular)
 // 8- video watch and choose what they saying text
+
+/*
+// types of questions:
+
+# 1- multiple choice:
+which is built currently under TextQuestion so you might want to change the name
+
+however refactor this compoents to have three major components:
+a- info (optional)
+b- question:
+which has three types audio/text/video (for arabic only/ if was english then only text)
+c- choices:
+(optional) could have two types, text and audio
+
+d- the message (result of your choice) correct answer wrong answer(button to move next question)
+
+
+audio questions the answer choices should have voices also
+maby all the arabic words should have voice when they are clicked
+
+
+# 2- complete the senctence:
+has only arabic language text, it doesn't make sense to complete English sentence
+
+it consist of:
+a- a sentence has one or more words missing.
+b- list of words (buttons) when you click them they would fill the first blank
+then second .. etc.
+
+
+
+# 3- make a full sentence
+the question is English (or not exists at all not sure)
+has only arabic sentences, make no sense to do English sentences
+
+the answer is a list of separated random words (buttons) when you click will goes inline
+after each other to form a sentence 
+
+this type could be integrated with the first thus the quetions could be video audio text
+but the answers could be multiple choice or form a complete sentence
+
+
+
+
+The message part should have the meaning of the sencence is case it was asked in Arabic
+and the answer is also arabic, and has a button to move to the next question
+should indicates if your answer is correct or wrong, 
+should indicates ifand what is the correct answer ONLY IF WAS WRONG.
+
+
+
+After done the lesson show the page to say that the lesson is completed and also the statistic
+how many question you answered correctly and what did you miss.
+
+
+
+
+one lesson must have stages /lesson/alphabet/{id} 1/2/3/4/5/...29 maybe have different set of questions but on the same topic
+*/
