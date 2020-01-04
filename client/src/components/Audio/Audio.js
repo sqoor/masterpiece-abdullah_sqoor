@@ -1,5 +1,11 @@
 import React from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faVolumeUp, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+// import { faVolumeUp } from "@fortawesome/fontawesome-svg-core";
+// import { faVolumeUp } from "@fortawesome/react-fontawesome";
+
 export default function Audio(props) {
   const { text, gender, autoplay } = props;
 
@@ -10,8 +16,8 @@ export default function Audio(props) {
   if (autoplay) read();
 
   return (
-    <button className="btn btn-primary btn-sm" onClick={read}>
-      Read
+    <button className="btn btn-light btn-sm" onClick={read}>
+      <FontAwesomeIcon icon={faPlayCircle} size="2x" />
     </button>
   );
 }
