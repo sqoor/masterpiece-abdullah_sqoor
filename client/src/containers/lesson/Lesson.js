@@ -18,7 +18,7 @@ export default class Lesson extends Component {
       {
         id: 2,
         type: "text",
-        question: "مرحبا",
+        question: "هل ذَهبتَ إلى المدرسةِ اليوم؟",
         choices: ["Hello", "Hi", "Goodbye", "See you later"],
         answer: "Hello"
       },
