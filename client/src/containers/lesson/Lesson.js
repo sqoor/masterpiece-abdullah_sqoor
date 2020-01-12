@@ -7,10 +7,10 @@ import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSent
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: 4,
+    questionsCount: 5,
     questions: [
       {
-        id: 0,
+        id: 1,
         // type: "multiple-choice|fill-blank|make-sentence",
         // formate: "text|audio|video",
         language: {
@@ -29,7 +29,7 @@ export default class Lesson extends Component {
         answer: "This is a text question"
       },
       {
-        id: 1,
+        id: 2,
         // type: "multiple-choice|fill-blank|make-sentence",
         // formate: "text|audio|video",
         language: {
@@ -48,7 +48,7 @@ export default class Lesson extends Component {
         answer: "This is a text question"
       },
       {
-        id: 2,
+        id: 3,
         language: {
           question: "ar",
           answer: "en"
@@ -65,7 +65,7 @@ export default class Lesson extends Component {
         answer: "That is an audio question"
       },
       {
-        id: 3,
+        id: 4,
         language: {
           question: "ar",
           answer: "en"
@@ -77,7 +77,7 @@ export default class Lesson extends Component {
         answer: "Hello"
       },
       {
-        id: 4,
+        id: 5,
         language: {
           question: "en",
           answer: "ar"
