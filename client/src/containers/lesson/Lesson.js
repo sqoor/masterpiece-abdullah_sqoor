@@ -1,40 +1,92 @@
 import React, { Component } from "react";
-import TextQuestion from "../../components/TextQuestion/TextQuestion";
-import AudioQuestion from "../../components/AudioQuestion/AudioQuestion";
-import VideoQuestion from "../../components/VideoQuestion/VideoQuestion";
+
 import Progress from "../../components/Progress/Progress";
+import MultipleChoiceQuestion from "../../components/MultipleChoiceQuestion/MultipleChoiceQuestion";
+import FillBlankQuestion from "../../components/FillBlankQuestion/FillBlankQuestion";
+import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSentenceQuestion";
 
 export default class Lesson extends Component {
   state = {
     questionsCount: 4,
     questions: [
       {
+        id: 0,
+        // type: "multiple-choice|fill-blank|make-sentence",
+        // formate: "text|audio|video",
+        language: {
+          question: "ar",
+          answer: "en"
+        },
+        type: "multiple-choice",
+        formate: "video",
+        question: "http://localhost:8000/path/to/video",
+        choices: [
+          "This is a text question",
+          "I want to go",
+          "You need to work hard",
+          "Goodbye"
+        ],
+        answer: "This is a text question"
+      },
+      {
         id: 1,
-        type: "text",
-        question: "Hello",
-        choices: ["مرحبا", "سلام", "معا", "الى اللقاء"],
-        answer: "مرحبا"
+        // type: "multiple-choice|fill-blank|make-sentence",
+        // formate: "text|audio|video",
+        language: {
+          question: "ar",
+          answer: "en"
+        },
+        type: "multiple-choice",
+        formate: "audio",
+        question: "هذا سؤال كتابي",
+        choices: [
+          "This is a text question",
+          "I want to go",
+          "You need to work hard",
+          "Goodbye"
+        ],
+        answer: "This is a text question"
       },
       {
         id: 2,
-        type: "text",
-        question: "هل ذَهبتَ إلى المدرسةِ اليوم؟",
-        choices: ["Hello", "Hi", "Goodbye", "See you later"],
-        answer: "Hello"
+        language: {
+          question: "ar",
+          answer: "en"
+        },
+        type: "multiple-choice",
+        formate: "audio",
+        question: "هذا سؤال صوتي",
+        choices: [
+          "what do you hear",
+          "Hi",
+          "That is an audio question",
+          "See you later"
+        ],
+        answer: "That is an audio question"
       },
       {
         id: 3,
-        type: "text",
+        language: {
+          question: "ar",
+          answer: "en"
+        },
+        type: "multiple-choice",
+        formate: "text",
         question: "مرحبا", // link to audio/video
-        choices: ["Hello", "Hi", "Goodbye", "See you later"],
+        choices: ["Day", "Hello", "Goodbye", "See you later"],
         answer: "Hello"
       },
       {
         id: 4,
-        type: "text",
-        question: "مرحبا", // link to audio/video
-        choices: ["Hello", "Hi", "Goodbye", "See you later"],
-        answer: "Hello"
+        language: {
+          question: "en",
+          answer: "ar"
+        },
+        type: "multiple-choice",
+        formate: "text",
+        question: "English Question", // link to audio/video
+        choices: ["سؤال انجليزي", "سؤال سهل", "ماذا تقول", "العلم العربي"],
+        answer: "سؤال انجليزي"
       }
     ],
     resutls: []
@@ -47,25 +99,25 @@ export default class Lesson extends Component {
     const question = questions[0];
 
     switch (question.type) {
-      case "text":
+      case "multiple-choice":
         return (
-          <TextQuestion
+          <MultipleChoiceQuestion
             {...question}
             passQuestion={this.passQuestion}
             retryQuestion={this.retryQuestion}
           />
         );
-      case "audio":
+      case "fill-blank":
         return (
-          <AudioQuestion
+          <FillBlankQuestion
             {...question}
             passQuestion={this.passQuestion}
             retryQuestion={this.retryQuestion}
           />
         );
-      case "video":
+      case "make-sentence":
         return (
-          <VideoQuestion
+          <MakeSentenceQuestion
             {...question}
             passQuestion={this.passQuestion}
             retryQuestion={this.retryQuestion}
@@ -81,8 +133,6 @@ export default class Lesson extends Component {
       prevState.questions.shift();
       return { ...prevState, questions: prevState.questions };
     });
-
-    console.log(this.state.questions);
   };
 
   retryQuestion = () => {
@@ -112,6 +162,7 @@ export default class Lesson extends Component {
               (100 / this.state.questionsCount)}
           </p>
         </div>
+
         <p>id: {id}</p>
         <p>name: {name}</p>
         <p>total unit progress: {progress}</p>
@@ -161,7 +212,7 @@ audio questions the answer choices should have voices also
 maby all the arabic words should have voice when they are clicked
 
 
-# 2- complete the senctence:
+# 2- complete the senctence: fill-blank
 has only arabic language text, it doesn't make sense to complete English sentence
 
 it consist of:
@@ -171,7 +222,7 @@ then second .. etc.
 
 
 
-# 3- make a full sentence
+# 3- make a full sentence- make-sentence
 the question is English (or not exists at all not sure)
 has only arabic sentences, make no sense to do English sentences
 
