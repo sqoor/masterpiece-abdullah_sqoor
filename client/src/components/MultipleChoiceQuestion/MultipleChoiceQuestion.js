@@ -89,9 +89,10 @@ export default class MultipleChoiceQuestion extends Component {
 // DONE - add voices to the question (or arabic language weather it was a question or an answer)
 // DONE - add fontawesome icon for the -audio
 // DONE - add voices when answer correctly/incorrectly
+// Fixed - bug - english kishon - we dont want read English questions.
 // - keyboard shortcuts (enter to go next, 1234, to choose choices, ...etc)
 // - shuffel choices places
-
+// - add voiced to the Arabic choices. (the correct answer).
 /*
 function shuffle(array) {
   array.sort(() => Math.random() - 0.5);

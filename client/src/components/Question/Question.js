@@ -10,7 +10,9 @@ export default function Question(props) {
       case "text":
         return (
           <>
-            <Audio autoplay={true} gender="Male" text={question} />
+            {language === "en" ? null : (
+              <Audio autoplay={true} gender="Male" text={question} />
+            )}
             <span className="ml-2">{question}</span>
           </>
         );
