@@ -54,16 +54,19 @@ export default class MultipleChoiceQuestion extends Component {
   };
 
   componentDidMount() {
-    const { question, answer, choices } = this.props;
+    let { question, choices, answer } = this.props;
+
+    question = question.split(" ");
+    choices.push(answer);
 
     this.setState({
-      question: question.split(" "),
+      question,
       choices,
       answer
     });
   }
 
-  getQuestion = () => {
+  getFormatedQuestion = () => {
     const { question, answer } = this.state;
     const blank = <span style={styles.blank}></span>;
     const formatedQuestion = question.map(word => {
@@ -75,9 +78,23 @@ export default class MultipleChoiceQuestion extends Component {
     return formatedQuestion;
   };
 
+  getFormatedChoices = () => {
+    let { choices } = this.state;
+
+    return choices.map(choice => (
+      <button className="btn btn-dark" style={styles.word}>
+        {choice + " "}
+      </button>
+    ));
+  };
+
   render() {
-    const { getQuestion } = this;
-    const { checkAnswer, moveNextQuestion } = this;
+    const {
+      getFormatedQuestion,
+      getFormatedChoices,
+      checkAnswer,
+      moveNextQuestion
+    } = this;
     const { questionStatus, hasChoosedAnswer } = this.state;
     const { answer, question, choices, formate, language } = this.props;
 
@@ -87,9 +104,9 @@ export default class MultipleChoiceQuestion extends Component {
           <h2>Complete the sentence</h2>
         </div>
 
-        <div className="question">{getQuestion()}</div>
+        <div className="question m-4">{getFormatedQuestion()}</div>
 
-        <div className="choices">choices</div>
+        <div className="choices m-5">{getFormatedChoices()}</div>
 
         <div className="result">Result</div>
       </>
@@ -99,7 +116,6 @@ export default class MultipleChoiceQuestion extends Component {
 
 const styles = {
   word: {
-    border: "1px solid grey",
     marginLeft: "5px",
     padding: "5px"
   },
