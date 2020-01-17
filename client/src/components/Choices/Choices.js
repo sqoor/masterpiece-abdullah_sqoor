@@ -3,7 +3,7 @@ import React from "react";
 import Choice from "../Choice/Choice";
 
 export default function Choices(props) {
-  const { hasChoosedAnswer, answer, choices, checkAnswer } = props;
+  const { hasChoosedAnswer, answer, choices, checkAnswer, language } = props;
   return (
     <div className="choices">
       <form>
@@ -16,6 +16,7 @@ export default function Choices(props) {
                 checkAnswer={checkAnswer}
                 hasChoosedAnswer={hasChoosedAnswer}
                 answer={answer}
+                language={language}
               />
             ))}
           </div>
