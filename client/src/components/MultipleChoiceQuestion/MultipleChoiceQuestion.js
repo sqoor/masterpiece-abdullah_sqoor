@@ -66,6 +66,7 @@ export default class MultipleChoiceQuestion extends Component {
           answer={answer}
           choices={choices}
           checkAnswer={checkAnswer}
+          language={language.answer}
         />
         <ResultMessage
           hasChoosedAnswer={hasChoosedAnswer}
