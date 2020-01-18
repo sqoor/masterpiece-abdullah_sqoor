@@ -1,21 +1,41 @@
 import React, { Component } from "react";
 
-import Question from "../Question/Question";
-import Choices from "../Choices/Choices";
 import ResultMessage from "../ResultMessage/ResultMessage";
-import QuestionInfo from "../QuestionInfo/QuestionInfo";
 
-export default class MultipleChoiceQuestion extends Component {
+export default class FillBlankQuestion extends Component {
   state = {
     questionStatus: "",
     hasChoosedAnswer: false,
     choosedAnswerBtn: null,
-
-    // new
     question: [],
     choices: [],
     answer: ""
   };
+
+  initComponent = () => {
+    const { shuffle } = this;
+    let { question, choices, answer } = this.props;
+
+    question = question.split(" ");
+    choices.push(answer);
+    choices = shuffle(choices);
+
+    this.setState({
+      question,
+      choices,
+      answer
+    });
+  };
+
+  componentDidMount() {
+    this.initComponent();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.question !== this.props.question) {
+      this.initComponent();
+    }
+  }
 
   highlightChoosedAnswerBtn() {
     this.state.choosedAnswerBtn.style.border = "6px black solid";
@@ -53,25 +73,20 @@ export default class MultipleChoiceQuestion extends Component {
     this.removeHighlightChoosedAnswerBtn();
   };
 
-  componentDidMount() {
-    let { question, choices, answer } = this.props;
-
-    question = question.split(" ");
-    choices.push(answer);
-
-    this.setState({
-      question,
-      choices,
-      answer
-    });
-  }
-
   getFormatedQuestion = () => {
-    const { question, answer } = this.state;
-    const blank = <span style={styles.blank}></span>;
+    const { question, answer, hasChoosedAnswer, choosedAnswerBtn } = this.state;
+    const blank = hasChoosedAnswer ? (
+      <span className="px-2" style={styles.blank}>
+        {choosedAnswerBtn.name + " "}
+      </span>
+    ) : (
+      <span className="px-4" style={styles.blank}></span>
+    );
     const formatedQuestion = question.map(word => {
       return (
-        <span className="word">{word === answer ? blank : word + " "}</span>
+        <span key={word} className="word">
+          {word === answer ? blank : word + " "}
+        </span>
       );
     });
 
@@ -79,36 +94,52 @@ export default class MultipleChoiceQuestion extends Component {
   };
 
   getFormatedChoices = () => {
-    let { choices } = this.state;
+    const { checkAnswer } = this;
+    let { choices, answer, hasChoosedAnswer } = this.state;
 
-    return choices.map(choice => (
-      <button className="btn btn-dark" style={styles.word}>
-        {choice + " "}
-      </button>
-    ));
+    return choices.map(choice => {
+      const btnColor = hasChoosedAnswer
+        ? choice === answer
+          ? "btn-success"
+          : "btn-danger"
+        : "btn-outline-dark";
+
+      return (
+        <button
+          key={choice}
+          onClick={checkAnswer}
+          name={choice}
+          className={"btn " + btnColor}
+          style={styles.word}
+        >
+          {choice + " "}
+        </button>
+      );
+    });
   };
 
+  shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
   render() {
-    const {
-      getFormatedQuestion,
-      getFormatedChoices,
-      checkAnswer,
-      moveNextQuestion
-    } = this;
+    const { getFormatedQuestion, getFormatedChoices, moveNextQuestion } = this;
     const { questionStatus, hasChoosedAnswer } = this.state;
-    const { answer, question, choices, formate, language } = this.props;
+    const { answer } = this.props;
 
     return (
       <>
         <div className="info">
-          <h2>Complete the sentence</h2>
+          <h3 className="font-weight-bold">Complete the sentence</h3>
         </div>
-
         <div className="question m-4">{getFormatedQuestion()}</div>
-
         <div className="choices m-5">{getFormatedChoices()}</div>
-
-        <div className="result">Result</div>
+        <ResultMessage
+          hasChoosedAnswer={hasChoosedAnswer}
+          answer={answer}
+          questionStatus={questionStatus}
+          moveNextQuestion={moveNextQuestion}
+        />
       </>
     );
   }
@@ -121,28 +152,10 @@ const styles = {
   },
   blank: {
     borderBottom: "1px solid grey",
-    marginBottom: "-10",
-    paddingLeft: "50px"
+    marginBottom: "-10"
   }
 };
 
-// DONE - destroy components message when moving to the next question.
-// DONE - when choosed a questions do not let choose another.
-// DONE - refactor passMessage and failMessage same compoent only message changes.
-// DONE - unclickable choices after choosing an answer.
-// DONE - highlight the correct and wrong answers after choosing one.
-// FIXED - BUG - no looping the wrongly answered question.
-// DONE - highlight the choosed answer
-// DONE - progress bar (answered questions / total quetsions * 100%) - on lesson component probably
-// DONE - add voices to the question (or arabic language weather it was a question or an answer)
-// DONE - add fontawesome icon for the -audio
-// DONE - add voices when answer correctly/incorrectly
-// Fixed - bug - english kishon - we dont want read English questions.
-// - keyboard shortcuts (enter to go next, 1234, to choose choices, ...etc)
-// - shuffel choices places
-// - add voiced to the Arabic choices. (the correct answer).
-/*
-function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
-}
-*/
+// bug - don't move forward when answer a incorrect answer
+// bug - not moving to next question ever
+// bug - component do not unmount when moving to next question if it was of the same type.
