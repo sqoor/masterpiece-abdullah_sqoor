@@ -13,11 +13,11 @@ export default class FillBlankQuestion extends Component {
   };
 
   initComponent = () => {
-    const { shuffle } = this;
+    const { shuffle, addCorrectAnswerToChoices } = this;
     let { question, choices, answer } = this.props;
 
     question = question.split(" ");
-    choices.push(answer);
+    choices = addCorrectAnswerToChoices();
     choices = shuffle(choices);
 
     this.setState({
@@ -37,12 +37,32 @@ export default class FillBlankQuestion extends Component {
     }
   }
 
+  addCorrectAnswerToChoices = () => {
+    const { choices, answer } = this.props;
+    const answerNotExistedInChocies = choices.indexOf(answer) === -1;
+
+    if (answerNotExistedInChocies) choices.push(answer);
+
+    return choices;
+  };
+
   highlightChoosedAnswerBtn() {
     this.state.choosedAnswerBtn.style.border = "6px black solid";
   }
 
   removeHighlightChoosedAnswerBtn() {
     this.state.choosedAnswerBtn.style.border = "";
+  }
+
+  removeCorrectAnswerFromChoices() {
+    const { answer } = this.state;
+
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        choices: prevState.choices.filter(choice => choice !== answer)
+      };
+    });
   }
 
   checkAnswer = async e => {
@@ -71,6 +91,7 @@ export default class FillBlankQuestion extends Component {
     this.setState({ hasChoosedAnswer: false });
 
     this.removeHighlightChoosedAnswerBtn();
+    this.removeCorrectAnswerFromChoices();
   };
 
   getFormatedQuestion = () => {
@@ -156,6 +177,4 @@ const styles = {
   }
 };
 
-// bug - don't move forward when answer a incorrect answer
-// bug - not moving to next question ever
-// bug - component do not unmount when moving to next question if it was of the same type.
+// bug - correct answer remain in the next question and keep adding.
