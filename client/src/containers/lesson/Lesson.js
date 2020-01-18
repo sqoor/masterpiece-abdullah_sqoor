@@ -7,11 +7,10 @@ import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSent
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: 3,
-    questions: FillBlankQuestionsTest,
+    questionsCount: MakeSentenceQuestionsCountTest,
+    questions: MakeSentenceQuestionsTest,
     resutls: []
   };
-  
 
   showQuestion = () => {
     const { passQuestion, retryQuestion } = this;
@@ -96,6 +95,60 @@ export default class Lesson extends Component {
 }
 
 // TODO: TEST:  dummy questions for testing ///////////////////////////
+
+const MakeSentenceQuestionsCountTest = 4;
+const MakeSentenceQuestionsTest = [
+  {
+    id: 31,
+    language: {
+      question: "ar",
+      answer: "en"
+    },
+    formate: "text",
+    type: "make-sentence",
+    question: "هل تستظيع الكتابة",
+    choices: ["She", "sun", "read", "man"],
+    answer: "Can you write"
+  },
+  {
+    id: 32,
+    language: {
+      question: "en",
+      answer: "ar"
+    },
+    formate: "text",
+    type: "make-sentence",
+    question: "Third type of questions",
+    choices: ["سيارة", "نور", "مرحبا", "احمد"],
+    answer: "ثالث انواع الاسئلة"
+  },
+  {
+    id: 33,
+    language: {
+      question: "ar",
+      answer: "en"
+    },
+    formate: "text",
+    type: "make-sentence",
+    question: "انا ادرس  اللغة العربية",
+    choices: ["He", "when", "there", "sometimes"],
+    answer: "I am styding the Arabic Languge"
+  },
+  {
+    id: 34,
+    language: {
+      question: "en",
+      answer: "ar"
+    },
+    formate: "text",
+    type: "make-sentence",
+    question: "I Love the life",
+    choices: ["و", "هو", "معين", "كتاب"],
+    answer: "أنا احب الحياة"
+  }
+];
+
+const FillBlankQuestionsCountTest = 3;
 const FillBlankQuestionsTest = [
   {
     id: 21,
@@ -135,6 +188,7 @@ const FillBlankQuestionsTest = [
   }
 ];
 
+const MultipleChoiceQuestionsCountTest = 4;
 const MultipleChoiceQuestionsTest = [
   {
     id: 1,
