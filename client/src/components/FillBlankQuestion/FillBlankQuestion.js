@@ -31,7 +31,7 @@ export default class FillBlankQuestion extends Component {
     this.initComponent();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.question !== this.props.question) {
       this.initComponent();
     }
@@ -176,5 +176,3 @@ const styles = {
     marginBottom: "-10"
   }
 };
-
-// bug - correct answer remain in the next question and keep adding.
