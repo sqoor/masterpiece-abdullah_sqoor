@@ -5,9 +5,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const products = require("./api/routes/products");
-const orders = require("./api/routes/orders");
-const users = require("./api/routes/users");
+const products = require("./api/v1/routes/products");
+const lessons = require("./api/v1/routes/lessons");
+const orders = require("./api/v1/routes/orders");
+const users = require("./api/v1/routes/users");
 
 /*
 app.use((req, res, next) => {
@@ -15,7 +16,7 @@ app.use((req, res, next) => {
         message: 'server is working'
     });
 });
-*/
+*/  
 
 mongoose
   .connect(
@@ -58,6 +59,7 @@ app.use((req, res, next) => {
 
 // handle resources
 app.use("/products", products);
+app.use("/lessons", lessons);
 app.use("/orders", orders);
 app.use("/users", users);
 
