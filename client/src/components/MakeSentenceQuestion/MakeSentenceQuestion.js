@@ -247,10 +247,13 @@ const styles = {
 };
 
 // FIXED - bug - arabic pushing array from the otherside
+
 // FIXED - bug - if the wrong answer then next the choices (correct ones) will disappear.
+
+// FIXED - bug - if toggling between the userAnswer and choices will add extra spaces, leading to fail answer even if all correct words there.
+// but not letters
+
 // bug - if answer has similar words then when toggled bweteen the usersAnwer or choices it will be gone
 // bug - do not allow to choose another words (remove from choice or add to userAnswer after submitting the answer
 // test words. form sentence and words.
 
-// bug - if toggling between the userAnswer and choices will add extra spaces, leading to fail answer even if all correct words there.
-// but not letters
