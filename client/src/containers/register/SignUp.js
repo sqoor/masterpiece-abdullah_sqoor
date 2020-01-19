@@ -5,7 +5,7 @@ class SignUp extends Component {
     name: "",
     email: "",
     password: "",
-    confirm: ""
+    password_confirmation: ""
   };
 
   changeHandler = e => {
@@ -25,46 +25,56 @@ class SignUp extends Component {
     const { name, email, password, confirm } = this.state;
 
     return (
-      <>
-        <h1>Sign up Page</h1>
-        <div>
+      <div className="container">
+        <h1 className="text-center">Sign up Page</h1>
           <form onSubmit={submitHandler}>
-            <label>Name</label>{" "}
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={changeHandler}
-            />{" "}
-            <br />
-            <label>Email</label>{" "}
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={changeHandler}
-            />{" "}
-            <br />
-            <label>Password</label>{" "}
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={changeHandler}
-            />{" "}
-            <br />
-            <label>Confirm Password</label>{" "}
-            <input
-              type="password"
-              name="confirm"
-              value={confirm}
-              onChange={changeHandler}
-            />{" "}
-            <br />
-            <input type="submit" />
+            <div className="form-group">  
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                className="form-control"
+                type="text"
+                name="name"
+                value={name}
+                onChange={changeHandler}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                className="form-control"
+                type="email"
+                name="email"
+                value={email}
+                onChange={changeHandler}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                className="form-control"
+                type="password"
+                name="password"
+                value={password}
+                onChange={changeHandler}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password_confirmation">Confirm Password</label>
+              <input
+                id="password_confirmation"
+                className="form-control"
+                type="password"
+                name="password_confirmation"
+                value={confirm}
+                onChange={changeHandler}
+              />
+            </div>
+            <input className="btn btn-primary" type="submit" value="Sign Up" />
           </form>
-        </div>
-      </>
+      </div>
     );
   }
 }
