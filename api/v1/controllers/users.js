@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 const User = require("../models/user");
 
 exports.singup = (req, res) => {
@@ -8,11 +9,16 @@ exports.singup = (req, res) => {
     if (user.length > 0)
       return res.status(409).json({ message: "User already exists" });
 
+    if (req.body.password !== req.body.password_confirmation)
+      return res.status(401).json({ message: "Password and confirm password do not match"})
+      // return res.status(403).json({ message: "Password and confirm password do not match"})
+
     bcrypt
       .hash(req.body.password, 10, (err, hashedPassword) => {
         if (err) res.status(500).json({ error: err });
 
         User.create({
+          name: req.body.name,
           email: req.body.email,
           password: hashedPassword
         })
@@ -71,3 +77,6 @@ exports.delete = (req, res) => {
       res.status(500).json({ error: err });
     });
 };
+
+
+
