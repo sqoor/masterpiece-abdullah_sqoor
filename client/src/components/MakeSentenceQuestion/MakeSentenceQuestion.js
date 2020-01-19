@@ -73,7 +73,7 @@ export default class MakeSentenceQuestion extends Component {
     if (hasChoosedAnswer) return;
 
     const { answer } = this.props;
-    let choice = userAnswer.join("").trim();
+    let choice = userAnswer.join(" ").trim();
     choice =  arabicLetter ? choice.replace(/ /g, "") : choice;
 
     const questionStatus = choice === answer ? "pass" : "fail";
@@ -139,7 +139,8 @@ export default class MakeSentenceQuestion extends Component {
 
     this.setState(prevState => ({
       ...prevState,
-      userAnswer: [...userAnswer, word + " "],
+      // userAnswer: [...userAnswer, word + " "], // TODO: BUG: extra space
+      userAnswer: [...userAnswer, word],
       choices: choices.filter(w => w !== word)
     }));
   };
@@ -208,7 +209,7 @@ export default class MakeSentenceQuestion extends Component {
 
         <div className="choices m-5">{getFormatedChoices()}</div>
 
-        {userAnswer.length ? (
+        {userAnswer.length && !hasChoosedAnswer ? (
           <div className="submit-answer d">
             <button
               className="btn btn-outline-primary btn-sm"
@@ -250,3 +251,6 @@ const styles = {
 // bug - if answer has similar words then when toggled bweteen the usersAnwer or choices it will be gone
 // bug - do not allow to choose another words (remove from choice or add to userAnswer after submitting the answer
 // test words. form sentence and words.
+
+// bug - if toggling between the userAnswer and choices will add extra spaces, leading to fail answer even if all correct words there.
+// but not letters
