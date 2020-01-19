@@ -7,6 +7,7 @@ export default class MakeSentenceQuestion extends Component {
     questionStatus: "",
     hasChoosedAnswer: false,
     choosedAnswerBtn: null,
+    arabicLetter: false,
     userAnswer: [],
     question: [],
     choices: [],
@@ -44,7 +45,10 @@ export default class MakeSentenceQuestion extends Component {
 
     answer = answer.split(" ");
 
-    if (answer.length === 1) answer = answer.join().split("");
+    if (answer.length === 1) {
+      answer = answer.join().split("");
+      this.setState({arabicLetter: true})
+    }
 
     if (answerNotExistedInChocies) choices = choices.concat(answer);
 
@@ -65,15 +69,17 @@ export default class MakeSentenceQuestion extends Component {
   checkAnswer = async e => {
     e.preventDefault();
 
-    const { userAnswer, hasChoosedAnswer } = this.state;
+    const { userAnswer, hasChoosedAnswer, arabicLetter } = this.state;
     if (hasChoosedAnswer) return;
 
     const { answer } = this.props;
-    const choice = userAnswer.join("").trim();
+    let choice = userAnswer.join("").trim();
+    choice =  arabicLetter ? choice.replace(/ /g, "") : choice;
+
     const questionStatus = choice === answer ? "pass" : "fail";
 
     console.log(answer.split("").join(""));
-    console.log(choice.replace(/ /g, ""));
+    console.log(choice);
     console.log(choice === answer);
     console.log(questionStatus);
     await this.setState({
@@ -97,7 +103,11 @@ export default class MakeSentenceQuestion extends Component {
       retryQuestion();
     }
 
-    this.setState({ hasChoosedAnswer: false, userAnswer: [] });
+    this.setState({ 
+      hasChoosedAnswer: false, 
+      arabicLetter: false,
+      userAnswer: []
+    });
   };
 
   getFormatedChoices = () => {
@@ -148,11 +158,12 @@ export default class MakeSentenceQuestion extends Component {
   };
 
   getUserAnswer = () => {
-    const { userAnswer, hasChoosedAnswer, questionStatus, answer } = this.state;
+    const { userAnswer, hasChoosedAnswer, arabicLetter } = this.state;
     const { removeFromUserAnswer } = this;
     const { language } = this.props;
 
-    if (hasChoosedAnswer && questionStatus === "pass") return answer;
+    if (hasChoosedAnswer && arabicLetter ) 
+      return userAnswer.join("").replace(/ /g, "");
 
     const formatedUserAnswer = userAnswer.map((word, index) => (
       <button
