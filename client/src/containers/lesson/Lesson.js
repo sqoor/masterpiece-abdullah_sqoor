@@ -99,6 +99,18 @@ export default class Lesson extends Component {
 const MakeSentenceQuestionsCountTest = 4;
 const MakeSentenceQuestionsTest = [
   {
+    id: 30,
+    language: {
+      question: "en",
+      answer: "ar"
+    },
+    formate: "text",
+    type: "make-sentence",
+    question: "a man",
+    choices: ["م", "ن", "ع", "د"],
+    answer: "رجل"
+  },
+  {
     id: 31,
     language: {
       question: "ar",
