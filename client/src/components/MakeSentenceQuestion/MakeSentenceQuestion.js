@@ -44,18 +44,12 @@ export default class MakeSentenceQuestion extends Component {
 
     answer = answer.split(" ");
 
+    if (answer.length === 1) answer = answer.join().split("");
+
     if (answerNotExistedInChocies) choices = choices.concat(answer);
 
     return choices;
   };
-
-  highlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "6px black solid";
-  }
-
-  removeHighlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "";
-  }
 
   removeCorrectAnswerFromChoices() {
     const { answer } = this.state;
@@ -76,21 +70,16 @@ export default class MakeSentenceQuestion extends Component {
 
     const { answer } = this.props;
     const choice = userAnswer.join("").trim();
-
     const questionStatus = choice === answer ? "pass" : "fail";
 
+    console.log(answer.split("").join(""));
+    console.log(choice.replace(/ /g, ""));
+    console.log(choice === answer);
+    console.log(questionStatus);
     await this.setState({
       questionStatus,
       hasChoosedAnswer: true
-      // choosedAnswerBtn: e.target
     });
-
-    console.log("work", questionStatus, answer === choice);
-    console.log(answer);
-    console.log(choice);
-    return;
-
-    // this.highlightChoosedAnswerBtn();
   };
 
   moveNextQuestion = () => {
@@ -109,44 +98,14 @@ export default class MakeSentenceQuestion extends Component {
     }
 
     this.setState({ hasChoosedAnswer: false, userAnswer: [] });
-
-    // TODO: delete this method, unnesscessary
-    // this.removeHighlightChoosedAnswerBtn();
-    // this.removeCorrectAnswerFromChoices();
-  };
-
-  // TODO: delete this method, unnesscessary
-  getFormatedQuestion = () => {
-    return;
-    const { question, answer, hasChoosedAnswer, choosedAnswerBtn } = this.state;
-    const blank = hasChoosedAnswer ? (
-      <span className="px-2" style={styles.blank}>
-        {choosedAnswerBtn.name + " "}
-      </span>
-    ) : (
-      <span className="px-4" style={styles.blank}></span>
-    );
-    const formatedQuestion = question.map(word => {
-      return (
-        <span key={word} className="word">
-          {word === answer ? blank : word + " "}
-        </span>
-      );
-    });
-
-    return formatedQuestion;
   };
 
   getFormatedChoices = () => {
     const { addToUserAnswer } = this;
-    let { choices, answer, hasChoosedAnswer } = this.state;
+    let { choices, hasChoosedAnswer } = this.state;
 
     return choices.map(choice => {
-      const btnColor = hasChoosedAnswer
-        ? choice === answer
-          ? "btn-success"
-          : "btn-danger"
-        : "btn-outline-dark";
+      const btnColor = hasChoosedAnswer ? "btn-dark" : "btn-outline-dark";
 
       return (
         <button
@@ -189,8 +148,11 @@ export default class MakeSentenceQuestion extends Component {
   };
 
   getUserAnswer = () => {
-    const { userAnswer } = this.state;
+    const { userAnswer, hasChoosedAnswer, questionStatus, answer } = this.state;
     const { removeFromUserAnswer } = this;
+    const { language } = this.props;
+
+    if (hasChoosedAnswer && questionStatus === "pass") return answer;
 
     const formatedUserAnswer = userAnswer.map((word, index) => (
       <button
@@ -203,6 +165,8 @@ export default class MakeSentenceQuestion extends Component {
       </button>
     ));
 
+    if (language.answer === "ar") return formatedUserAnswer.reverse();
+
     return formatedUserAnswer;
   };
 
@@ -212,14 +176,13 @@ export default class MakeSentenceQuestion extends Component {
 
   render() {
     const {
-      getFormatedQuestion,
       getFormatedChoices,
       moveNextQuestion,
       getUserAnswer,
       checkAnswer
     } = this;
     const { questionStatus, hasChoosedAnswer, userAnswer } = this.state;
-    const { language, question, answer } = this.props;
+    const { question, answer } = this.props;
 
     return (
       <>
@@ -229,9 +192,7 @@ export default class MakeSentenceQuestion extends Component {
         <div className="question m-4">{question}</div>
 
         <div className="user-answer m-5" style={styles.userAnswer}>
-          {language.answer === "ar"
-            ? getUserAnswer().reverse()
-            : getUserAnswer()}
+          {getUserAnswer()}
         </div>
 
         <div className="choices m-5">{getFormatedChoices()}</div>
@@ -275,7 +236,6 @@ const styles = {
 
 // FIXED - bug - arabic pushing array from the otherside
 // FIXED - bug - if the wrong answer then next the choices (correct ones) will disappear.
-// after submitting the answer
-// form sentence and words.
 // bug - if answer has similar words then when toggled bweteen the usersAnwer or choices it will be gone
-// bug - do not allow to choose another words (remove from choice or add to userAnswer)
+// bug - do not allow to choose another words (remove from choice or add to userAnswer after submitting the answer
+// test words. form sentence and words.
