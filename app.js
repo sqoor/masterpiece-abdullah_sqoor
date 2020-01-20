@@ -40,22 +40,22 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
 app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
-// app.use(express.static('uploads'))
+app.use(express.static('uploads'))
 app.use(cors());
 
-app.use((req, res, next) => {
-  // req.header('Access-Controll-Allows-Origin', 'http://name-my-page.com')
-  res.header("Access-Controll-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    req.header("Access-Control-Allow-Methods", "PUT, POST, GET, PATCH, DElETE");
-    return res.status(200).json({});
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   // req.header('Access-Controll-Allows-Origin', 'http://name-my-page.com')
+//   res.header("Access-Controll-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   if (req.method === "OPTIONS") {
+//     req.header("Access-Control-Allow-Methods", "PUT, POST, GET, PATCH, DElETE");
+//     return res.status(200).json({});
+//   }
+//   next();
+// });
 
 // handle resources
 app.use("/products", products);
