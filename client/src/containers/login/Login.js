@@ -30,7 +30,7 @@ class Login extends Component {
   };
 
   requestApi = credentials => {
-    Axios.post("/users/signup", { credentials })
+    Axios.post("/users/login", { credentials })
       .then(res => {
         // do somesthing go to next page if has the token or respond to use unauthorized
         console.log("RESPONSE", res);
@@ -57,7 +57,7 @@ class Login extends Component {
   };
 
   render() {
-    const { changeHandler, submitHandler } = this;
+    const { validator, changeHandler, submitHandler } = this;
     const { email, password } = this.state;
 
     return (
@@ -81,7 +81,7 @@ class Login extends Component {
               value={email}
               onChange={changeHandler}
             />
-            {this.validator.message("email", email, "required|email")}
+            {validator.message("email", email, "required|email")}
           </div>
 
           <div className="form-group">
@@ -94,7 +94,7 @@ class Login extends Component {
               value={password}
               onChange={changeHandler}
             />
-            {this.validator.message("password", password, "required")}
+            {validator.message("password", password, "required")}
           </div>
           <input className="btn btn-primary" type="submit" value="Login" />
         </form>
