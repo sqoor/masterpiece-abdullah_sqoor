@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
 app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
 // app.use(express.static('uploads'))
-// app.use(cors());
+app.use(cors());
 
 app.use((req, res, next) => {
   // req.header('Access-Controll-Allows-Origin', 'http://name-my-page.com')
