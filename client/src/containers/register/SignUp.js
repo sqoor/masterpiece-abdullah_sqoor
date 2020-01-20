@@ -71,6 +71,13 @@ class SignUp extends Component {
 
     return (
       <div className="container">
+        <ToastContainer
+          position={toast.POSITION.TOP_LEFT}
+          transition={Zoom}
+          toastClassName="rounded"
+          hideProgressBar={true}
+        />
+
         <h1 className="text-center">Sign up Page</h1>
         <form onSubmit={submitHandler}>
           <div className="form-group">
