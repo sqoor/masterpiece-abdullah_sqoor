@@ -30,14 +30,24 @@ class Login extends Component {
   };
 
   requestApi = credentials => {
-    Axios.post("/users/login", { credentials })
+    console.log("requestApi:", credentials);
+
+    Axios.post("/users/login", credentials)
       .then(res => {
-        // do somesthing go to next page if has the token or respond to use unauthorized
-        console.log("RESPONSE", res);
+        // do somesthing go to next page
+        // if has the token or respond to use unauthorized
+        console.log("RESPONSE", res.data, res.status);
+        if (res.status === 200) console.log("Login");
+        else console.log("something went wrong");
       })
       .catch(error => {
-        console.log("ERROR", error);
-        toast.error("Something went wrong");
+        const statusCode = error.response.status;
+
+        console.log("ERROR", error.response.data);
+        console.log(statusCode);
+
+        if (statusCode === 401) toast.error("email and password do not match.");
+        else toast.error("Something went wrong.");
       });
   };
 
@@ -48,7 +58,6 @@ class Login extends Component {
 
     if (this.validator.allValid()) {
       requestApi(state);
-      console.log("Logining in...", state);
     } else {
       this.validator.showMessages();
       this.forceUpdate();

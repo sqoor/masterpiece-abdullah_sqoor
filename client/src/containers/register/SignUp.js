@@ -40,6 +40,9 @@ class SignUp extends Component {
     Axios.post("/users/signup", { credentials })
       .then(res => {
         // do somesthing go to next page if has the token or respond to use unauthorized
+        if (res.status === 201) console.log("Sign up and added a new user");
+        else console.log("something went wrong");
+
         console.log("RESPONSE", res);
       })
       .catch(error => {
