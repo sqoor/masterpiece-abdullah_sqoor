@@ -21,9 +21,6 @@ class Navbar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav mr-auto">
-            <Link className="nav-link active" to="/">
-              WASLA <span className="sr-only">(current)</span>
-            </Link>
             <li className="nav-item">
               <Link className="nav-link" to="/learn">
                 Learn
@@ -40,17 +37,6 @@ class Navbar extends Component {
                 Read/Listen
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/signup">
-                Make Account
-              </Link>
-            </li>
           </ul>
           <form className="form-inline mt-2 mt-md-0">
             <input
@@ -59,12 +45,12 @@ class Navbar extends Component {
               placeholder="Search"
               aria-label="Search"
             />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
-            >
-              Search
-            </button>
+            <Link className="btn btn-outline-success m-2" to="/login">
+              Login
+            </Link>
+            <Link className="btn btn-outline-success m-2" to="/signup">
+              Make Account
+            </Link>
           </form>
         </div>
       </nav>

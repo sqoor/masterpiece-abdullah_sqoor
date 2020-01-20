@@ -132,7 +132,11 @@ class SignUp extends Component {
               "required|match"
             )}
           </div>
-          <input className="btn btn-primary" type="submit" value="Sign Up" />
+          <input
+            className="btn btn-outline-success"
+            type="submit"
+            value="Sign Up"
+          />
         </form>
       </div>
     );
