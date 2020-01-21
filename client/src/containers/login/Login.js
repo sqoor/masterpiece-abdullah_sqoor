@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -14,7 +15,9 @@ class Login extends Component {
     super(props);
     this.validator = new SimpleReactValidator({
       element: message => (
-        <div className="alert alert-danger mt-2">{message}</div>
+        <div className="alert alert-danger mt-2">
+          <small>{message}</small>
+        </div>
       )
     });
   }
@@ -70,7 +73,10 @@ class Login extends Component {
     const { email, password } = this.state;
 
     return (
-      <div className="container">
+      <div
+        className="container card p-5 w-50 bg-dark hvr-shrink"
+        style={styles.box}
+      >
         <ToastContainer
           position={toast.POSITION.TOP_LEFT}
           transition={Zoom}
@@ -78,10 +84,17 @@ class Login extends Component {
           hideProgressBar={true}
         />
 
-        <h1 className="text-center">Login Page</h1>
+        <h1
+          className="text-center bg-success text-light mb-4"
+          style={styles.title}
+        >
+          Login
+        </h1>
         <form onSubmit={submitHandler}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>{" "}
+            <label className="text-success" htmlFor="email">
+              Email
+            </label>{" "}
             <input
               className="form-control"
               id="email"
@@ -92,9 +105,10 @@ class Login extends Component {
             />
             {validator.message("email", email, "required|email")}
           </div>
-
           <div className="form-group">
-            <label htmlFor="form-control">Password</label>{" "}
+            <label className="text-success" htmlFor="form-control">
+              Password
+            </label>{" "}
             <input
               id="password"
               className="form-control"
@@ -106,10 +120,16 @@ class Login extends Component {
             {validator.message("password", password, "required")}
           </div>
           <input
-            className="btn btn-outline-success"
+            className="btn btn-outline-success mt-4 hvr-sink"
             type="submit"
             value="Login"
           />
+          <Link
+            className="float-right text-success font-weight-bold mt-5"
+            to="/signup"
+          >
+            <small>New user</small>
+          </Link>
         </form>
       </div>
     );
@@ -117,3 +137,15 @@ class Login extends Component {
 }
 
 export default Login;
+
+const styles = {
+  title: {
+    clipPath:
+      "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
+  },
+  box: {
+    "-webkitBoxShadow ": "21px 28px 10px -9px rgba(0,0,0,0.75)",
+    "-mozBoxShadow ": "21px 28px 10px -9px rgba(0,0,0,0.75)",
+    boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"
+  }
+};

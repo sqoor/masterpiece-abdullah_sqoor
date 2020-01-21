@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { Link } from "react-router-dom";
 
 class SignUp extends Component {
   state = {
@@ -16,7 +17,9 @@ class SignUp extends Component {
     super(props);
     this.validator = new SimpleReactValidator({
       element: message => (
-        <div className="alert alert-danger mt-2">{message}</div>
+        <div className="alert alert-danger mt-2">
+          <small>{message}</small>
+        </div>
       ),
       validators: {
         match: {
@@ -82,7 +85,10 @@ class SignUp extends Component {
     const { name, email, password, password_confirmation } = this.state;
 
     return (
-      <div className="container">
+      <div
+        className="container card p-5 w-50 bg-dark hvr-shrink"
+        style={styles.box}
+      >
         <ToastContainer
           position={toast.POSITION.TOP_LEFT}
           transition={Zoom}
@@ -90,10 +96,17 @@ class SignUp extends Component {
           hideProgressBar={true}
         />
 
-        <h1 className="text-center">Sign up Page</h1>
+        <h1
+          className="text-center bg-success text-light mb-4"
+          style={styles.title}
+        >
+          Sign Up
+        </h1>
         <form onSubmit={submitHandler}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label className="text-success" htmlFor="name">
+              Name
+            </label>
             <input
               id="name"
               className="form-control"
@@ -105,7 +118,9 @@ class SignUp extends Component {
             {validator.message("name", name, "required|alpha")}
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label className="text-success" htmlFor="email">
+              Email
+            </label>
             <input
               id="email"
               className="form-control"
@@ -117,7 +132,9 @@ class SignUp extends Component {
             {validator.message("email", email, "required|email")}
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label className="text-success" htmlFor="password">
+              Password
+            </label>
             <input
               id="password"
               className="form-control"
@@ -129,7 +146,9 @@ class SignUp extends Component {
             {validator.message("password", password, "required|between:8,255")}
           </div>
           <div className="form-group">
-            <label htmlFor="password_confirmation">Confirm Password</label>
+            <label className="text-success" htmlFor="password_confirmation">
+              Confirm Password
+            </label>
             <input
               id="password_confirmation"
               className="form-control"
@@ -145,10 +164,17 @@ class SignUp extends Component {
             )}
           </div>
           <input
-            className="btn btn-outline-success"
+            className="btn btn-outline-success mt-4 hvr-sink"
             type="submit"
             value="Sign Up"
           />
+
+          <Link
+            className="float-right text-success font-weight-bold mt-5"
+            to="/login"
+          >
+            <small>Already a user</small>
+          </Link>
         </form>
       </div>
     );
@@ -156,3 +182,15 @@ class SignUp extends Component {
 }
 
 export default SignUp;
+
+const styles = {
+  box: {
+    "-webkitBoxShadow ": "21px 28px 13px -9px rgba(0,0,0,0.75)",
+    "-mozBoxShadow ": "21px 28px 13px -9px rgba(0,0,0,0.75)",
+    boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"
+  },
+  title: {
+    clipPath:
+      "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
+  }
+};

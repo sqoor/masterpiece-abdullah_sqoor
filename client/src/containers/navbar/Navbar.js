@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark mb-5 bg-dark">
-        <Link className="navbar-brand" to="/">
+      <nav className="navbar navbar-expand-md navbar-dark  py-1 mb-4 bg-dark">
+        <Link className="navbar-brand hvr-grow" to="/">
           WASLA
         </Link>
         <button
@@ -22,17 +22,17 @@ class Navbar extends Component {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/learn">
+              <Link className="nav-link hvr-grow" to="/learn">
                 Learn
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item hvr-grow">
               <Link className="nav-link" to="">
                 Write
               </Link>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item hvr-grow">
               <Link className="nav-link" to="">
                 Read/Listen
               </Link>
