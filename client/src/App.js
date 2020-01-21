@@ -9,6 +9,11 @@ class App extends Component {
     authenticated: false
   };
 
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (token) this.setState({ authenticated: true });
+  }
+
   login = value => {
     this.setState({ authenticated: value });
   };
