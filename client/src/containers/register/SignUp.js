@@ -9,7 +9,7 @@ class SignUp extends Component {
     name: "",
     email: "",
     password: "",
-    passwordConfirmation: ""
+    password_confirmation: ""
   };
 
   constructor(props) {
@@ -37,17 +37,26 @@ class SignUp extends Component {
   };
 
   requestApi = credentials => {
-    Axios.post("/users/signup", { credentials })
+    Axios.post("/users/signup", credentials)
       .then(res => {
         // do somesthing go to next page if has the token or respond to use unauthorized
-        if (res.status === 201) console.log("Sign up and added a new user");
-        else console.log("something went wrong");
-
+        if (res.status === 201) {
+          console.log("Sign up and added a new user");
+          const { id, token } = res.data.newUser;
+          console.log(res.data.newUser);
+        } else {
+          console.log("something went wrong");
+        }
         console.log("RESPONSE", res);
       })
       .catch(error => {
-        console.log("ERROR", error);
-        toast.error("Something went wrong");
+        const res = error.response;
+        console.log("ERROR", res);
+
+        if (res.status === 409)
+          toast.error("This user already have account, try different email");
+        else if (res.status === 401) toast.error(res.data.message);
+        else if (res.status === 500) toast.error("Something went wrong");
       });
   };
 
@@ -70,7 +79,7 @@ class SignUp extends Component {
 
   render() {
     const { validator, changeHandler, submitHandler } = this;
-    const { name, email, password, passwordConfirmation } = this.state;
+    const { name, email, password, password_confirmation } = this.state;
 
     return (
       <div className="container">
@@ -125,13 +134,13 @@ class SignUp extends Component {
               id="password_confirmation"
               className="form-control"
               type="password"
-              name="passwordConfirmation"
-              value={passwordConfirmation}
+              name="password_confirmation"
+              value={password_confirmation}
               onChange={changeHandler}
             />
             {validator.message(
               "password confirmation",
-              passwordConfirmation,
+              password_confirmation,
               "required|match"
             )}
           </div>
