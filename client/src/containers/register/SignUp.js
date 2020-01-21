@@ -4,13 +4,22 @@ import Axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope,
+  faLock,
+  faUser,
+  faUnlock,
+  faEye
+} from "@fortawesome/free-solid-svg-icons";
 
 class SignUp extends Component {
   state = {
     name: "",
     email: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
+    showPassword: false
   };
 
   constructor(props) {
@@ -80,9 +89,26 @@ class SignUp extends Component {
     console.log("Signing up...", this.state);
   };
 
+  toggleShowingPassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  };
+
   render() {
-    const { validator, changeHandler, submitHandler } = this;
-    const { name, email, password, password_confirmation } = this.state;
+    const {
+      validator,
+      changeHandler,
+      submitHandler,
+      toggleShowingPassword
+    } = this;
+    const {
+      name,
+      email,
+      password,
+      password_confirmation,
+      showPassword
+    } = this.state;
 
     return (
       <div
@@ -105,6 +131,10 @@ class SignUp extends Component {
         <form onSubmit={submitHandler}>
           <div className="form-group">
             <label className="text-success" htmlFor="name">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faUser} />
+              </span>
+              {"  "}
               Name
             </label>
             <input
@@ -119,6 +149,10 @@ class SignUp extends Component {
           </div>
           <div className="form-group">
             <label className="text-success" htmlFor="email">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </span>
+              {"  "}
               Email
             </label>
             <input
@@ -133,26 +167,48 @@ class SignUp extends Component {
           </div>
           <div className="form-group">
             <label className="text-success" htmlFor="password">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faUnlock} />
+              </span>
+              {"  "}
               Password
             </label>
-            <input
-              id="password"
-              className="form-control"
-              type="password"
-              name="password"
-              value={password}
-              onChange={changeHandler}
-            />
+
+            <div class="input-group mb-2">
+              <input
+                id="password"
+                className="form-control"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={changeHandler}
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span
+                    className={showPassword ? "text-dark" : "text-success"}
+                    onClick={toggleShowingPassword}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </span>
+                </div>
+              </div>
+            </div>
             {validator.message("password", password, "required|between:8,255")}
           </div>
           <div className="form-group">
             <label className="text-success" htmlFor="password_confirmation">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faLock} />
+              </span>
+              {"  "}
               Confirm Password
             </label>
+
             <input
               id="password_confirmation"
               className="form-control"
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password_confirmation"
               value={password_confirmation}
               onChange={changeHandler}

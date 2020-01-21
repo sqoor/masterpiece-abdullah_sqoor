@@ -4,11 +4,14 @@ import Axios from "axios";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock, faEye } from "@fortawesome/free-solid-svg-icons";
 
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    showPassword: false
   };
 
   constructor(props) {
@@ -68,9 +71,20 @@ class Login extends Component {
     }
   };
 
+  toggleShowingPassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  };
+
   render() {
-    const { validator, changeHandler, submitHandler } = this;
-    const { email, password } = this.state;
+    const {
+      validator,
+      changeHandler,
+      submitHandler,
+      toggleShowingPassword
+    } = this;
+    const { email, password, showPassword } = this.state;
 
     return (
       <div
@@ -93,8 +107,12 @@ class Login extends Component {
         <form onSubmit={submitHandler}>
           <div className="form-group">
             <label className="text-success" htmlFor="email">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </span>
+              {"  "}
               Email
-            </label>{" "}
+            </label>
             <input
               className="form-control"
               id="email"
@@ -106,17 +124,33 @@ class Login extends Component {
             {validator.message("email", email, "required|email")}
           </div>
           <div className="form-group">
-            <label className="text-success" htmlFor="form-control">
+            <label className="text-success" htmlFor="password">
+              <span className="text-success">
+                <FontAwesomeIcon icon={faLock} />
+              </span>
+              {"  "}
               Password
-            </label>{" "}
-            <input
-              id="password"
-              className="form-control"
-              type="password"
-              name="password"
-              value={password}
-              onChange={changeHandler}
-            />
+            </label>
+            <div class="input-group mb-2">
+              <input
+                id="password"
+                className="form-control"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={changeHandler}
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span
+                    className={showPassword ? "text-dark" : "text-success"}
+                    onClick={toggleShowingPassword}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </span>
+                </div>
+              </div>
+            </div>{" "}
             {validator.message("password", password, "required")}
           </div>
           <input
