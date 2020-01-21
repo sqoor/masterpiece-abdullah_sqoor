@@ -1,14 +1,40 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 const checkAuth = require("../middleware/check-auth");
 const ordersController = require("../controllers/lessons");
 
+router.get("/", checkAuth, function(req, res) {
+  const lessons = [
+    {
+      id: 1,
+      name: "alphabets-basics",
+      image: "no-image",
+      progress: "100" // get from the logged user.
+    },
+    {
+      id: 2,
+      name: "alphabets-ii",
+      image: "no-image",
+      progress: "60" // get from the logged user.
+    },
+    {
+      id: 3,
+      name: "alphabets-advance",
+      image: "no-image",
+      progress: "10" // get from the logged user.
+    },
+    {
+      id: 4,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
+    }
+  ];
 
-router.get("/", function (req, res) {
-    return res.json('worked');
+  return res.status(200).json(lessons);
 });
-
 
 /* 
 router.get("/", checkAuth, ordersController.getAll);

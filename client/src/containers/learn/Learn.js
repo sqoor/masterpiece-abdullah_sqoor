@@ -3,36 +3,49 @@ import { Link } from "react-router-dom";
 // import "./learn.css";
 
 import LessonCard from "../../components/LessonCard/LessonCard";
+import Axios from "axios";
 
 export default class Learn extends Component {
   state = {
-    lessons: [
-      {
-        id: 1,
-        name: "alphabets-basics",
-        image: "no-image",
-        progress: "100" // get from the logged user.
-      },
-      {
-        id: 2,
-        name: "alphabets-ii",
-        image: "no-image",
-        progress: "60" // get from the logged user.
-      },
-      {
-        id: 3,
-        name: "alphabets-advance",
-        image: "no-image",
-        progress: "10" // get from the logged user.
-      },
-      {
-        id: 4,
-        name: "greetings",
-        image: "no-image",
-        progress: "0" // get from the logged user.
-      }
-    ]
+    lessons: []
   };
+
+  getToken() {
+    let token = localStorage.getItem("token");
+    token = JSON.parse(token);
+
+    return token;
+  }
+
+  requestApi = () => {
+    const token = this.getToken();
+
+    Axios.get("/lessons", { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => {
+        if (res.status === 200) {
+          console.log("you are authenticated");
+          this.setState({ lessons: res.data });
+        }
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/login");
+          console.log(
+            "you are not authorized, redirect to signup login, wrong token"
+          );
+        } else {
+          this.props.history.push("/login");
+          console.log(
+            "something went bad, maybe server down, redirect to login/register"
+          );
+        }
+        console.log("ERROR", error);
+      });
+  };
+
+  componentDidMount() {
+    this.requestApi();
+  }
 
   render() {
     const { lessons } = this.state;
