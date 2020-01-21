@@ -6,7 +6,7 @@ export default function Progress(props) {
   return (
     <div className="progress">
       <div
-        className="progress-bar"
+        className="progress-bar bg-success"
         role="progressbar"
         style={{ width: `${progress}%` }}
         aria-valuenow={progress}
