@@ -6,6 +6,7 @@ import { ToastContainer, toast, Zoom } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faEye } from "@fortawesome/free-solid-svg-icons";
+import AuthContext from "../../context/auth-context";
 
 class Login extends Component {
   state = {
@@ -14,8 +15,11 @@ class Login extends Component {
     showPassword: false
   };
 
+  static contextType = AuthContext;
+
   constructor(props) {
     super(props);
+
     this.validator = new SimpleReactValidator({
       element: message => (
         <div className="alert alert-danger mt-2">
@@ -24,6 +28,16 @@ class Login extends Component {
       )
     });
   }
+
+  componentDidMount() {
+    this.redirectIfAuthenticated();
+  }
+
+  redirectIfAuthenticated = () => {
+    return this.context.authenticated
+      ? this.props.history.push("/learn")
+      : null;
+  };
 
   changeHandler = e => {
     const name = e.target.name;
@@ -35,25 +49,33 @@ class Login extends Component {
     }));
   };
 
-  requestApi = credentials => {
-    console.log("requestApi:", credentials);
+  storeToken(token) {
+    localStorage.setItem("token", JSON.stringify(token));
+  }
 
+  redirectToLessons() {
+    this.props.history.push("/learn");
+  }
+
+  requestApi = credentials => {
     Axios.post("/users/login", credentials)
       .then(res => {
-        // do somesthing go to next page
-        // if has the token or respond to use unauthorized
-        console.log("RESPONSE", res.data, res.status);
-        if (res.status === 200) console.log("Login");
-        else console.log("something went wrong");
+        if (res.status === 200) {
+          this.context.login(true);
+          this.storeToken(res.data.token);
+          this.redirectToLessons();
+        } else {
+          toast.error("Something went wrong.");
+        }
       })
       .catch(error => {
         const statusCode = error.response.status;
 
-        console.log("ERROR", error.response.data);
-        console.log(statusCode);
-
-        if (statusCode === 401) toast.error("email and password do not match.");
-        else toast.error("Something went wrong.");
+        if (statusCode === 401) {
+          toast.error("email and password do not match.");
+        } else {
+          toast.error("Something went wrong.");
+        }
       });
   };
 
@@ -131,7 +153,7 @@ class Login extends Component {
               {"  "}
               Password
             </label>
-            <div class="input-group mb-2">
+            <div className="input-group mb-2">
               <input
                 id="password"
                 className="form-control"
@@ -140,8 +162,8 @@ class Login extends Component {
                 value={password}
                 onChange={changeHandler}
               />
-              <div class="input-group-append">
-                <div class="input-group-text">
+              <div className="input-group-append">
+                <div className="input-group-text">
                   <span
                     className={showPassword ? "text-dark" : "text-success"}
                     onClick={toggleShowingPassword}
@@ -178,8 +200,8 @@ const styles = {
       "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
   },
   box: {
-    "-webkitBoxShadow ": "21px 28px 10px -9px rgba(0,0,0,0.75)",
-    "-mozBoxShadow ": "21px 28px 10px -9px rgba(0,0,0,0.75)",
+    WebkitBoxShadow: "21px 28px 10px -9px rgba(0,0,0,0.75)",
+    MozBoxShadow: "21px 28px 10px -9px rgba(0,0,0,0.75)",
     boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"
   }
 };

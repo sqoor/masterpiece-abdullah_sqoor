@@ -12,6 +12,7 @@ import {
   faUnlock,
   faEye
 } from "@fortawesome/free-solid-svg-icons";
+import AuthContext from "../../context/auth-context";
 
 class SignUp extends Component {
   state = {
@@ -22,8 +23,11 @@ class SignUp extends Component {
     showPassword: false
   };
 
+  static contextType = AuthContext;
+
   constructor(props) {
     super(props);
+
     this.validator = new SimpleReactValidator({
       element: message => (
         <div className="alert alert-danger mt-2">
@@ -39,6 +43,16 @@ class SignUp extends Component {
     });
   }
 
+  componentDidMount() {
+    this.redirectIfAuthenticated();
+  }
+
+  redirectIfAuthenticated = () => {
+    return this.context.authenticated
+      ? this.props.history.push("/learn")
+      : null;
+  };
+
   changeHandler = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -48,27 +62,37 @@ class SignUp extends Component {
     });
   };
 
+  storeToken(token) {
+    localStorage.setItem("token", JSON.stringify(token));
+  }
+
+  redirectToLessons() {
+    this.props.history.push("/learn");
+  }
+
   requestApi = credentials => {
     Axios.post("/users/signup", credentials)
       .then(res => {
-        // do somesthing go to next page if has the token or respond to use unauthorized
         if (res.status === 201) {
           console.log("Sign up and added a new user");
-          const { id, token } = res.data.newUser;
-          console.log(res.data.newUser);
+          this.context.login(true);
+          this.storeToken(res.data.token);
+          this.redirectToLessons();
         } else {
           console.log("something went wrong");
+          toast.error("Something went wrong");
         }
-        console.log("RESPONSE", res);
       })
       .catch(error => {
         const res = error.response;
-        console.log("ERROR", res);
 
-        if (res.status === 409)
+        if (res.status === 409) {
           toast.error("This user already have account, try different email");
-        else if (res.status === 401) toast.error(res.data.message);
-        else if (res.status === 500) toast.error("Something went wrong");
+        } else if (res.status === 401) {
+          toast.error(res.data.message);
+        } else {
+          toast.error("Something went wrong");
+        }
       });
   };
 
@@ -174,7 +198,7 @@ class SignUp extends Component {
               Password
             </label>
 
-            <div class="input-group mb-2">
+            <div className="input-group mb-2">
               <input
                 id="password"
                 className="form-control"
@@ -183,8 +207,8 @@ class SignUp extends Component {
                 value={password}
                 onChange={changeHandler}
               />
-              <div class="input-group-append">
-                <div class="input-group-text">
+              <div className="input-group-append">
+                <div className="input-group-text">
                   <span
                     className={showPassword ? "text-dark" : "text-success"}
                     onClick={toggleShowingPassword}
@@ -241,8 +265,8 @@ export default SignUp;
 
 const styles = {
   box: {
-    "-webkitBoxShadow ": "21px 28px 13px -9px rgba(0,0,0,0.75)",
-    "-mozBoxShadow ": "21px 28px 13px -9px rgba(0,0,0,0.75)",
+    WebkitBoxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)",
+    MozBoxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)",
     boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"
   },
   title: {
