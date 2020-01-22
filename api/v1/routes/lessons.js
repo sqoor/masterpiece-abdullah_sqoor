@@ -30,6 +30,36 @@ router.get("/", checkAuth, function(req, res) {
       name: "greetings",
       image: "no-image",
       progress: "0" // get from the logged user.
+    },
+    {
+      id: 5,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
+    },
+    {
+      id: 6,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
+    },
+    {
+      id: 7,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
+    },
+    {
+      id: 8,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
+    },
+    {
+      id: 9,
+      name: "greetings",
+      image: "no-image",
+      progress: "0" // get from the logged user.
     }
   ];
 
