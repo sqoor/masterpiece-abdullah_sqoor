@@ -52,7 +52,9 @@ export default class Learn extends Component {
 
     return (
       <div>
-        <h1>Learn Components - Page</h1>
+        <h2 className="text-center mt-5 p-5 font-weight-bold border border-success">
+          Lessons Page
+        </h2>
 
         <div className="container">
           <div className="row">
