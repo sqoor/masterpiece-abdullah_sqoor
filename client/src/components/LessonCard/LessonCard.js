@@ -10,8 +10,8 @@ export default function LessonCard(props) {
   }
 
   return (
-    <div className="mt-5 mx-2 col-1 hvr-grow" style={styles.boxShadow}>
-      <div className="card" style={{ width: "18rem" }}>
+    <div className="mt-5 mx-3" style={styles.boxShadow}>
+      <div className="card hvr-grow bd" style={{ width: "18rem" }}>
         {/* <img src="..." className="card-img-top" alt="..." /> */}
         <div className="card-body">
           <span className="float-left badge badge-pill badge-info mr-2">

@@ -52,7 +52,10 @@ export default class Learn extends Component {
 
     return (
       <div>
-        <h2 className="text-center mt-5 p-5 font-weight-bold border border-success">
+        <h2
+          className="text-center mt-5 p-5 font-weight-bold border border-success"
+          style={styles.title}
+        >
           Lessons Page
         </h2>
 
@@ -72,3 +75,10 @@ export default class Learn extends Component {
     );
   }
 }
+
+const styles = {
+  title: {
+    clipPath:
+      "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
+  }
+};
