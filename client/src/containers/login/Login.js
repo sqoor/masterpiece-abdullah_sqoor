@@ -200,6 +200,7 @@ const styles = {
       "polygon(0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 100% 15%, 100% 85%, 85% 85%, 85% 100%, 15% 100%, 15% 85%, 0% 85%)"
   },
   box: {
+    marginTop: "30px",
     WebkitBoxShadow: "21px 28px 10px -9px rgba(0,0,0,0.75)",
     MozBoxShadow: "21px 28px 10px -9px rgba(0,0,0,0.75)",
     boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"

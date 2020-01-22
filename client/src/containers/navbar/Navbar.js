@@ -15,7 +15,7 @@ class Navbar extends Component {
     const { authenticated } = this.context;
 
     return (
-      <nav className="navbar navbar-expand-md navbar-dark  py-1 mb-4 bg-dark">
+      <nav className="main-nav navbar navbar-expand-md navbar-dark py-2 bg-dark">
         <Link className="navbar-brand hvr-grow" to="/">
           WASLA
         </Link>
@@ -55,7 +55,7 @@ class Navbar extends Component {
               ) : null}
             </li>
           </ul>
-          <form className="form-inline mt-2 mt-md-0">
+          <form className="form-inline mt-2 mt-md-0 nav navbar-nav navbar-right">
             <input
               className="form-control mr-sm-2"
               type="text"

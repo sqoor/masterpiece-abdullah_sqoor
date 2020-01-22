@@ -265,6 +265,7 @@ export default SignUp;
 
 const styles = {
   box: {
+    marginTop: "30px",
     WebkitBoxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)",
     MozBoxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)",
     boxShadow: "21px 28px 13px -9px rgba(0,0,0,0.75)"
