@@ -47,7 +47,7 @@ export default class MakeSentenceQuestion extends Component {
 
     if (answer.length === 1) {
       answer = answer.join().split("");
-      this.setState({arabicLetter: true})
+      this.setState({ arabicLetter: true });
     }
 
     if (answerNotExistedInChocies) choices = choices.concat(answer);
@@ -74,7 +74,7 @@ export default class MakeSentenceQuestion extends Component {
 
     const { answer } = this.props;
     let choice = userAnswer.join(" ").trim();
-    choice =  arabicLetter ? choice.replace(/ /g, "") : choice;
+    choice = arabicLetter ? choice.replace(/ /g, "") : choice;
 
     const questionStatus = choice === answer ? "pass" : "fail";
 
@@ -103,8 +103,8 @@ export default class MakeSentenceQuestion extends Component {
       retryQuestion();
     }
 
-    this.setState({ 
-      hasChoosedAnswer: false, 
+    this.setState({
+      hasChoosedAnswer: false,
       arabicLetter: false,
       userAnswer: []
     });
@@ -163,7 +163,7 @@ export default class MakeSentenceQuestion extends Component {
     const { removeFromUserAnswer } = this;
     const { language } = this.props;
 
-    if (hasChoosedAnswer && arabicLetter ) 
+    if (hasChoosedAnswer && arabicLetter)
       return userAnswer.join("").replace(/ /g, "");
 
     const formatedUserAnswer = userAnswer.map((word, index) => (
@@ -194,20 +194,27 @@ export default class MakeSentenceQuestion extends Component {
       checkAnswer
     } = this;
     const { questionStatus, hasChoosedAnswer, userAnswer } = this.state;
-    const { question, answer } = this.props;
+    const { question, answer, language } = this.props;
+    const QuestionAlignment =
+      language.question === "ar" ? "text-right" : "text-left";
+    const AnswerAlignment =
+      language.answer === "ar" ? "text-right" : "text-left";
 
     return (
       <>
         <div className="info">
           <h3 className="font-weight-bold">Make a sentence</h3>
         </div>
-        <div className="question m-4">{question}</div>
+        <div className={`question m-4 ${QuestionAlignment}`}>{question}</div>
 
-        <div className="user-answer m-5" style={styles.userAnswer}>
+        <div
+          className={`user-answer m-4 ${AnswerAlignment}`}
+          style={styles.userAnswer}
+        >
           {getUserAnswer()}
         </div>
 
-        <div className="choices m-5">{getFormatedChoices()}</div>
+        <div className="choices m-4 text-center">{getFormatedChoices()}</div>
 
         {userAnswer.length && !hasChoosedAnswer ? (
           <div className="submit-answer d">
@@ -242,7 +249,8 @@ const styles = {
   },
   userAnswer: {
     borderBottom: "1px solid grey",
-    paddingBottom: "-20"
+    paddingBottom: "-20",
+    height: "30px"
   }
 };
 
@@ -256,4 +264,3 @@ const styles = {
 // bug - if answer has similar words then when toggled bweteen the usersAnwer or choices it will be gone
 // bug - do not allow to choose another words (remove from choice or add to userAnswer after submitting the answer
 // test words. form sentence and words.
-

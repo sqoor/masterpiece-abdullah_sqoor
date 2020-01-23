@@ -66,29 +66,15 @@ export default class Lesson extends Component {
 
   render() {
     const { showQuestion } = this;
-    const { id, name, image, progress } = this.props.location.state;
-    return (
-      <div>
-        <h1>Module info</h1>
-        <div className="w-75 m-auto">
-          <Progress
-            progress={
-              (this.state.questionsCount - this.state.questions.length) *
-              (100 / this.state.questionsCount)
-            }
-          />
-          <p>
-            Exercise Progress:{" "}
-            {(this.state.questionsCount - this.state.questions.length) *
-              (100 / this.state.questionsCount)}
-          </p>
-        </div>
+    // const { id, name, image, progress } = this.props.location.state;
+    const progress =
+      (this.state.questionsCount - this.state.questions.length) *
+      (100 / this.state.questionsCount);
 
-        <p>id: {id}</p>
-        <p>name: {name}</p>
-        <p>total unit progress: {progress}</p>
-        <hr className="bg-danger w-75 my-5" />
-        <div className="border">{showQuestion()}</div>
+    return (
+      <div className="w-75 mx-auto mt-5">
+        <Progress progress={progress} />
+        <div className="border mt-5 p-5">{showQuestion()}</div>
       </div>
     );
   }
