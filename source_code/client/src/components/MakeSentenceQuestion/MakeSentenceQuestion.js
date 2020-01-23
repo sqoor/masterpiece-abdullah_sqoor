@@ -264,3 +264,9 @@ const styles = {
 // bug - if answer has similar words then when toggled bweteen the usersAnwer or choices it will be gone
 // bug - do not allow to choose another words (remove from choice or add to userAnswer after submitting the answer
 // test words. form sentence and words.
+
+/* a
+ bug to fix: when the token expired it wont get the data (lessons) even though you have access to 
+lessons page and token exists on local storage so you are logged in but not authorized.
+
+*/
