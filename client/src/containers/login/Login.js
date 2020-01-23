@@ -30,7 +30,17 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.redirectIfAuthenticated();
+    this.checkAuthentication();
+    // this.redirectIfAuthenticated();
+  }
+
+  checkAuthentication() {
+    const token = localStorage.getItem("token");
+    let authenticated = false;
+
+    if (token) authenticated = true;
+
+    if (authenticated) this.props.history.push("/");
   }
 
   redirectIfAuthenticated = () => {

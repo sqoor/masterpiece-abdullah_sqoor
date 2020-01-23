@@ -29,22 +29,29 @@ export default class Learn extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) {
-          this.props.history.push("/login");
           console.log(
-            "you are not authorized, redirect to signup login, wrong token"
+            "you are not authorized, redirect to signup login, wrong token,  redirect to login/register"
           );
+          return this.props.history.push("/login"); //TODO: mayb this causing a bug, but redirectIfNotAuthentiated prevent it.
         } else {
-          this.props.history.push("/login");
-          console.log(
-            "something went bad, maybe server down, redirect to login/register"
-          );
+          console.log("Something went bad, maybe server down");
         }
-        console.log("ERROR", error);
       });
   };
 
+  redirectIfNotAuthenticated() {
+    const token = localStorage.getItem("token");
+    let notAuthenticated = true;
+
+    if (token) notAuthenticated = false;
+
+    if (notAuthenticated) this.props.history.push("/signup");
+  }
+
   componentDidMount() {
+    this.redirectIfNotAuthenticated();
     this.requestApi();
+    console.log("Learn component Did Mount");
   }
 
   render() {

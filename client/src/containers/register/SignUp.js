@@ -45,9 +45,19 @@ class SignUp extends Component {
 
   componentDidMount() {
     this.redirectIfAuthenticated();
+    // this.redirectIfAuthenticated();
   }
 
-  redirectIfAuthenticated = () => {
+  redirectIfAuthenticated() {
+    const token = localStorage.getItem("token");
+    let authenticated = true;
+
+    if (token) authenticated = false;
+
+    if (authenticated) this.props.history.push("/");
+  }
+
+  redirectIfAuthenticated2 = () => {
     return this.context.authenticated
       ? this.props.history.push("/learn")
       : null;

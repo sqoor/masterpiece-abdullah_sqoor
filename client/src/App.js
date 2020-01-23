@@ -10,8 +10,16 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.checkAuthentication();
+  }
+
+  checkAuthentication() {
     const token = localStorage.getItem("token");
-    if (token) this.setState({ authenticated: true });
+    let authenticated = false;
+
+    if (token) authenticated = true;
+
+    this.setState({ authenticated });
   }
 
   login = value => {
