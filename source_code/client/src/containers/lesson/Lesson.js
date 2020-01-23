@@ -82,7 +82,7 @@ export default class Lesson extends Component {
 
 // TODO: TEST:  dummy questions for testing ///////////////////////////
 
-const MakeSentenceQuestionsCountTest = 4;
+const MakeSentenceQuestionsCountTest = 5;
 const MakeSentenceQuestionsTest = [
   {
     id: 30,
