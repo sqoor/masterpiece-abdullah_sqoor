@@ -217,9 +217,9 @@ export default class MakeSentenceQuestion extends Component {
         <div className="choices m-4 text-center">{getFormatedChoices()}</div>
 
         {userAnswer.length && !hasChoosedAnswer ? (
-          <div className="submit-answer d">
+          <div className="submit-answer">
             <button
-              className="btn btn-outline-primary btn-sm"
+              className="btn btn-outline-dark btn-sm"
               onClick={checkAnswer}
             >
               Submit Answer
