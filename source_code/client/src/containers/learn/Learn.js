@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "./learn.css";
 
 import LessonCard from "../../components/LessonCard/LessonCard";
 import Axios from "axios";
+
+import AuthContext from "../../context/auth-context";
 
 export default class Learn extends Component {
   state = {
     lessons: []
   };
+
+  static contextType = AuthContext;
 
   getToken() {
     let token = localStorage.getItem("token");
@@ -32,6 +35,7 @@ export default class Learn extends Component {
           console.log(
             "you are not authorized, redirect to signup login, wrong token,  redirect to login/register"
           );
+          this.context.login(false);
           return this.props.history.push("/login"); //TODO: mayb this causing a bug, but redirectIfNotAuthentiated prevent it.
         } else {
           console.log("Something went bad, maybe server down");
