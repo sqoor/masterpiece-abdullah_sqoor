@@ -67,7 +67,7 @@ export default class Learn extends Component {
         </h2>
 
         <div className="container">
-          <div className="row">
+          <div className="row d-flex justify-content-center">
             {lessons.map((lesson, index) => (
               <Link
                 key={lesson.id}
