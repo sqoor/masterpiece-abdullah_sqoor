@@ -36,6 +36,7 @@ mongoose
   .catch(err => {
     console.log("failed to connect to mongodb due to: ", err);
   });
+mongoose.set("useCreateIndex", true);
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
