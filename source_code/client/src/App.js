@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 import Routing from "./containers/routing/Routing";
 import AuthContext from "./context/auth-context";
+import Axios from "axios";
 
 class App extends Component {
   state = {
@@ -15,11 +16,20 @@ class App extends Component {
 
   checkAuthentication() {
     const token = localStorage.getItem("token");
-    let authenticated = false;
+    let loggedIn = false;
 
-    if (token) authenticated = true;
+    if (!token) return this.login(false);
 
-    this.setState({ authenticated });
+    Axios.get("/check-auth", {
+      headers: {
+        authurization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if (res.status === 200) loggedIn = true;
+      else if (res.status === 401) loggedIn = false;
+    });
+
+    this.login(loggedIn);
   }
 
   login = value => {

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+const checkAuth = require("./api/v1/routes/check-auth");
 const products = require("./api/v1/routes/products");
 const lessons = require("./api/v1/routes/lessons");
 const orders = require("./api/v1/routes/orders");
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
         message: 'server is working'
     });
 });
-*/  
+*/
 
 mongoose
   .connect(
@@ -40,7 +41,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
 app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
-app.use(express.static('uploads'))
+app.use(express.static("uploads"));
 app.use(cors());
 
 // app.use((req, res, next) => {
@@ -58,6 +59,7 @@ app.use(cors());
 // });
 
 // handle resources
+app.use("/check-auth", checkAuth);
 app.use("/products", products);
 app.use("/lessons", lessons);
 app.use("/orders", orders);

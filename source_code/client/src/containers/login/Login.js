@@ -31,16 +31,25 @@ class Login extends Component {
 
   componentDidMount() {
     this.checkAuthentication();
-    // this.redirectIfAuthenticated();
+    this.redirectIfAuthenticated();
   }
 
   checkAuthentication() {
     const token = localStorage.getItem("token");
-    let authenticated = false;
+    let loggedIn = false;
 
-    if (token) authenticated = true;
+    if (!token) return this.context.login(false);
 
-    if (authenticated) this.props.history.push("/");
+    Axios.get("/check-auth", {
+      headers: {
+        authurization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if (res.status === 200) loggedIn = true;
+      else if (res.status === 401) loggedIn = false;
+    });
+
+    this.context.login(loggedIn);
   }
 
   redirectIfAuthenticated = () => {

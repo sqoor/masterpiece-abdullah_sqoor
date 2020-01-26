@@ -7,8 +7,8 @@ import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSent
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: MakeSentenceQuestionsCountTest,
-    questions: MakeSentenceQuestionsTest,
+    questionsCount: 4,
+    questions: MultipleChoiceQuestionsTest,
     resutls: []
   };
 
