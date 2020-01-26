@@ -1,0 +1,15 @@
+1- fix expiration of token bug,
+
+2- unify the bootstrap - downgrade to 3
+
+3- finish all front end
+a- style of lesons 
+b- redner lessons from api
+c- push results
+d- add report
+
+4- render all data from api and fix all routes delete uncessesary ones
+
+5- build the admin dashboard
+
+6- sumibt the final content (exercises texts/videos/sounds/)
