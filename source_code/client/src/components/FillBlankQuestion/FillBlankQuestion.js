@@ -146,15 +146,16 @@ export default class FillBlankQuestion extends Component {
   render() {
     const { getFormatedQuestion, getFormatedChoices, moveNextQuestion } = this;
     const { questionStatus, hasChoosedAnswer } = this.state;
-    const { answer } = this.props;
+    const { answer, language } = this.props;
+    const align = language.question === "ar" ? "text-right" : "";
 
     return (
       <>
         <div className="info">
           <h3 className="font-weight-bold">Complete the sentence</h3>
         </div>
-        <div className="question m-4">{getFormatedQuestion()}</div>
-        <div className="choices m-5">{getFormatedChoices()}</div>
+        <div className={"question m-4 " + align}>{getFormatedQuestion()}</div>
+        <div className="choices m-5 text-center">{getFormatedChoices()}</div>
         <ResultMessage
           hasChoosedAnswer={hasChoosedAnswer}
           answer={answer}

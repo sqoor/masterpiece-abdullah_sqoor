@@ -30,7 +30,7 @@ export default function Question(props) {
     }
   }
 
-  return <div className="question">{getQuestionFormate()}</div>;
+  return <div className="question text-center mb-3">{getQuestionFormate()}</div>;
 }
 
 // if language is english then don't read it and don't show the audio icon either

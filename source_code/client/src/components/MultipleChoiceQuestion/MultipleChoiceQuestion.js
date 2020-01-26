@@ -48,6 +48,10 @@ export default class MultipleChoiceQuestion extends Component {
     this.removeHighlightChoosedAnswerBtn();
   };
 
+  shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+  }
+
   render() {
     const { checkAnswer, moveNextQuestion } = this;
     const { questionStatus, hasChoosedAnswer } = this.state;
@@ -55,7 +59,6 @@ export default class MultipleChoiceQuestion extends Component {
 
     return (
       <>
-        <QuestionInfo />
         <Question
           question={question}
           formate={formate}

@@ -7,8 +7,8 @@ import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSent
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: 4,
-    questions: MultipleChoiceQuestionsTest,
+    questionsCount: FillBlankQuestionsCountTest,
+    questions: FillBlankQuestionsTest,
     resutls: []
   };
 
@@ -196,7 +196,7 @@ const MultipleChoiceQuestionsTest = [
       question: "ar",
       answer: "en"
     },
-    type: "fill-blank",
+    type: "multiple-choice",
     formate: "video",
     question: "http://localhost:8000/path/to/video",
     choices: [
@@ -215,7 +215,7 @@ const MultipleChoiceQuestionsTest = [
       question: "ar",
       answer: "en"
     },
-    type: "fill-blank",
+    type: "multiple-choice",
     formate: "audio",
     question: "هذا سؤال كتابي",
     choices: [
@@ -232,7 +232,7 @@ const MultipleChoiceQuestionsTest = [
       question: "ar",
       answer: "en"
     },
-    type: "fill-blank",
+    type: "multiple-choice",
     formate: "audio",
     question: "هذا سؤال صوتي",
     choices: [
@@ -249,7 +249,7 @@ const MultipleChoiceQuestionsTest = [
       question: "ar",
       answer: "en"
     },
-    type: "fill-blank",
+    type: "multiple-choice",
     formate: "text",
     question: "مرحبا", // link to audio/video
     choices: ["Day", "Hello", "Goodbye", "See you later"],
