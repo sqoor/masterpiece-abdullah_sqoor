@@ -1,6 +1,7 @@
 1- fix expiration of token bug,
 
 2- unify the bootstrap - downgrade to 3
+UPGRAGE Tab panes in Home compoent to use bootstrap 4
 
 3- finish all front end
 a- style of lesons 
@@ -13,3 +14,24 @@ d- add report
 5- build the admin dashboard
 
 6- sumibt the final content (exercises texts/videos/sounds/)
+
+_______________________________________________________________________________
+
+----bugs to fix -------------
+
+bug on refersh it restart all the questions and loose the prgress
+- maybe use localstore to store the state of questions
+localstorage.setItem('user', JSON.stringify(state));
+retrive it as
+const reduxState = localstorage.getItem('user');
+JSON.parse(reduxState)
+
+MultipleChoiceQuestions -----
+MultipleChoiceQuestions choices array need to be shuffled - (bug) after answering question it shuffle b
+it need English question and the answer in arabic and it should have voices when it reads.
+
+
+FillBlankQuestions ----
+DONE - arabic questions need to be aligned to the right, and choices to the middle
+read the arabic answer after it answered correctly.
+if choose wrong answer the next round of the question the correct answer will disappear. if it was the last question
