@@ -35,24 +35,36 @@ class Login extends Component {
   }
 
   checkAuthentication() {
-    const token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
     let loggedIn = false;
 
-    if (!token) return this.context.login(false);
+    if (!token) return this.context.login(loggedIn);
+
+    token = token ? "Bearer " + token.replace(/"/g, "") : token;
 
     Axios.get("/check-auth", {
       headers: {
-        authurization: `Bearer ${token}`
+        authorization: token
       }
-    }).then(res => {
-      if (res.status === 200) loggedIn = true;
-      else if (res.status === 401) loggedIn = false;
-    });
-
-    this.context.login(loggedIn);
+    })
+      .then(res => {
+        console.log("res", res);
+        if (res.status === 200) {
+          loggedIn = true;
+        } else if (res.status === 401) {
+          loggedIn = false;
+        }
+        this.context.login(loggedIn);
+      })
+      .catch(error => {
+        loggedIn = false;
+        this.context.login(loggedIn);
+      });
   }
 
   redirectIfAuthenticated = () => {
+    console.log("login authenticated:", this.context.authenticated);
+
     return this.context.authenticated
       ? this.props.history.push("/learn")
       : null;
@@ -81,6 +93,7 @@ class Login extends Component {
       .then(res => {
         if (res.status === 200) {
           this.context.login(true);
+
           this.storeToken(res.data.token);
           this.redirectToLessons();
         } else {
@@ -119,6 +132,8 @@ class Login extends Component {
   };
 
   render() {
+    this.redirectIfAuthenticated();
+
     const {
       validator,
       changeHandler,

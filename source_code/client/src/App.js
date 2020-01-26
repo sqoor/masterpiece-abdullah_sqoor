@@ -15,25 +15,36 @@ class App extends Component {
   }
 
   checkAuthentication() {
-    const token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
     let loggedIn = false;
 
     if (!token) return this.login(false);
 
+    token = token ? "Bearer " + token.replace(/"/g, "") : token;
+
     Axios.get("/check-auth", {
       headers: {
-        authurization: `Bearer ${token}`
+        authurization: token
       }
-    }).then(res => {
-      if (res.status === 200) loggedIn = true;
-      else if (res.status === 401) loggedIn = false;
-    });
+    })
+      .then(res => {
+        console.log("res", res);
+        if (res.status === 200) {
+          loggedIn = true;
+        } else if (res.status === 401) {
+          loggedIn = false;
+        }
 
-    this.login(loggedIn);
+        this.login(loggedIn);
+      })
+      .catch(error => {
+        loggedIn = false;
+        this.login(loggedIn);
+      });
   }
 
-  login = value => {
-    this.setState({ authenticated: value });
+  login = async value => {
+    await this.setState({ authenticated: value });
   };
 
   render() {

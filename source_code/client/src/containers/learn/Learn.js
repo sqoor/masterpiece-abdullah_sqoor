@@ -59,6 +59,8 @@ export default class Learn extends Component {
   }
 
   render() {
+    this.redirectIfNotAuthenticated();
+
     const { lessons } = this.state;
 
     return (

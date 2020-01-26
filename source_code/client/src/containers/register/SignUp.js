@@ -44,20 +44,41 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
+    this.checkAuthentication();
     this.redirectIfAuthenticated();
-    // this.redirectIfAuthenticated();
   }
 
-  redirectIfAuthenticated() {
-    const token = localStorage.getItem("token");
-    let authenticated = true;
+  checkAuthentication() {
+    let token = localStorage.getItem("token");
+    let loggedIn = false;
 
-    if (token) authenticated = false;
+    if (!token) return this.context.login(loggedIn);
 
-    if (authenticated) this.props.history.push("/");
+    token = token ? "Bearer " + token.replace(/"/g, "") : token;
+
+    Axios.get("/check-auth", {
+      headers: {
+        authorization: token
+      }
+    })
+      .then(res => {
+        console.log("res", res);
+        if (res.status === 200) {
+          loggedIn = true;
+        } else if (res.status === 401) {
+          loggedIn = false;
+        }
+        this.context.login(loggedIn);
+      })
+      .catch(error => {
+        loggedIn = false;
+        this.context.login(loggedIn);
+      });
   }
 
-  redirectIfAuthenticated2 = () => {
+  redirectIfAuthenticated = () => {
+    console.log("login authenticated:", this.context.authenticated);
+
     return this.context.authenticated
       ? this.props.history.push("/learn")
       : null;
@@ -130,6 +151,8 @@ class SignUp extends Component {
   };
 
   render() {
+    this.redirectIfAuthenticated();
+
     const {
       validator,
       changeHandler,
