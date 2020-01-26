@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 
+import _ from "lodash";
+
 import Progress from "../../components/Progress/Progress";
 import MultipleChoiceQuestion from "../../components/MultipleChoiceQuestion/MultipleChoiceQuestion";
 import FillBlankQuestion from "../../components/FillBlankQuestion/FillBlankQuestion";
 import MakeSentenceQuestion from "../../components/MakeSentenceQuestion/MakeSentenceQuestion";
+import Report from "../../components/Report/Report";
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: FillBlankQuestionsCountTest,
-    questions: FillBlankQuestionsTest,
-    resutls: []
+    questionsCount: allQuestionsTestCount,
+    questions: allQuestionsTest,
+    errQuestions: []
   };
 
   showQuestion = () => {
@@ -51,16 +54,24 @@ export default class Lesson extends Component {
 
   passQuestion = () => {
     this.setState(prevState => {
-      prevState.questions.shift();
-      return { ...prevState, questions: prevState.questions };
+      const answeredQuestion = prevState.questions.shift();
+      return {
+        ...prevState,
+        questions: prevState.questions
+      };
     });
   };
 
   retryQuestion = () => {
     this.setState(prevState => {
-      const unansweredQuestion = prevState.questions.shift();
-      prevState.questions.push(unansweredQuestion);
-      return { ...prevState, questions: prevState.questions };
+      const unAnsweredQuestion = prevState.questions.shift();
+      prevState.questions.push(unAnsweredQuestion);
+      prevState.errQuestions.push(unAnsweredQuestion);
+      return {
+        ...prevState,
+        questions: prevState.questions,
+        resutls: prevState.errQuestions
+      };
     });
   };
 
@@ -70,6 +81,9 @@ export default class Lesson extends Component {
     const progress =
       (this.state.questionsCount - this.state.questions.length) *
       (100 / this.state.questionsCount);
+
+    if (this.state.questions.length === 0)
+      return <Report errQuestions={this.state.errQuestions} />;
 
     return (
       <div className="w-75 mx-auto mt-5">
@@ -256,6 +270,18 @@ const MultipleChoiceQuestionsTest = [
     answer: "Hello"
   }
 ];
+
+let allQuestionsTest = [
+  // ...MakeSentenceQuestionsTest,
+  // ...FillBlankQuestionsTest,
+  ...MultipleChoiceQuestionsTest
+];
+const allQuestionsTestCount =
+  MakeSentenceQuestionsCountTest +
+  FillBlankQuestionsCountTest +
+  MultipleChoiceQuestionsCountTest;
+
+allQuestionsTest = _.shuffle(allQuestionsTest);
 
 /////////////////////////////////////////
 
