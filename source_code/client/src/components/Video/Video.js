@@ -4,7 +4,7 @@ import React from "react";
 export default function Video(props) {
   return (
     <div>
-      <video autoPlay="true" controls width="320" height="240">
+      <video autoPlay={true} controls width="320" height="240">
         <source src={require("./video.mp4")} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
