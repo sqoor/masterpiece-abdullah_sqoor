@@ -77,13 +77,18 @@ export default class Lesson extends Component {
 
   render() {
     const { showQuestion } = this;
-    // const { id, name, image, progress } = this.props.location.state;
+    const { errQuestions, questionsCount } = this.state;
     const progress =
       (this.state.questionsCount - this.state.questions.length) *
       (100 / this.state.questionsCount);
 
     if (this.state.questions.length === 0)
-      return <Report errQuestions={this.state.errQuestions} />;
+      return (
+        <Report
+          errQuestions={errQuestions}
+          totalQuestionsCount={questionsCount}
+        />
+      );
 
     return (
       <div className="w-75 mx-auto mt-5">
