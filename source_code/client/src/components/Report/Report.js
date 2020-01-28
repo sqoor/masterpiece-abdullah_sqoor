@@ -2,16 +2,13 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 
 export default function Report(props) {
   const { errQuestions, totalQuestionsCount } = props;
   const errQuestionsCount = errQuestions ? errQuestions.length : 0;
   const successQuestionsCount = totalQuestionsCount - errQuestionsCount;
-
-  console.log("errQuestions", errQuestions);
-  console.log("questionsCount", totalQuestionsCount);
-  console.log("errQuestionsCount", errQuestionsCount);
 
   return (
     <div className="container my-5">
