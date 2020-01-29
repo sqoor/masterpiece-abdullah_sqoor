@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import _ from "lodash";
+import Axios from "axios";
 
 import Progress from "../../components/Progress/Progress";
 import MultipleChoiceQuestion from "../../components/MultipleChoiceQuestion/MultipleChoiceQuestion";
@@ -10,10 +11,23 @@ import Report from "../../components/Report/Report";
 
 export default class Lesson extends Component {
   state = {
-    questionsCount: allQuestionsTestCount,
-    questions: allQuestionsTest,
+    questionsCount: 0,
+    questions: [],
     errQuestions: []
   };
+
+  componentDidMount() {
+    try {
+      const lesson = this.props.location.state;
+      this.setState({
+        questionsCount: lesson.questions.length,
+        questions: lesson.questions
+      });
+    } catch (e) {
+      console.log("Something went wrong", e);
+      this.props.history.push("/learn");
+    }
+  }
 
   showQuestion = () => {
     const { passQuestion, retryQuestion } = this;
@@ -98,197 +112,6 @@ export default class Lesson extends Component {
     );
   }
 }
-
-// TODO: TEST:  dummy questions for testing ///////////////////////////
-
-const MakeSentenceQuestionsCountTest = 5;
-const MakeSentenceQuestionsTest = [
-  {
-    id: 30,
-    language: {
-      question: "en",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "make-sentence",
-    question: "a man",
-    choices: ["م", "ن", "ع", "د"],
-    answer: "رجل"
-  },
-  {
-    id: 31,
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    formate: "text",
-    type: "make-sentence",
-    question: "هل تستظيع الكتابة",
-    choices: ["She", "sun", "read", "man"],
-    answer: "Can you write"
-  },
-  {
-    id: 32,
-    language: {
-      question: "en",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "make-sentence",
-    question: "Third type of questions",
-    choices: ["سيارة", "نور", "مرحبا", "احمد"],
-    answer: "ثالث انواع الاسئلة"
-  },
-  {
-    id: 33,
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    formate: "text",
-    type: "make-sentence",
-    question: "انا ادرس  اللغة العربية",
-    choices: ["He", "when", "there", "sometimes"],
-    answer: "I am styding the Arabic Languge"
-  },
-  {
-    id: 34,
-    language: {
-      question: "en",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "make-sentence",
-    question: "I Love the life",
-    choices: ["و", "هو", "معين", "كتاب"],
-    answer: "أنا احب الحياة"
-  }
-];
-
-const FillBlankQuestionsCountTest = 3;
-const FillBlankQuestionsTest = [
-  {
-    id: 21,
-    language: {
-      question: "ar",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "fill-blank",
-    question: ".مرحبا بكم في موقعنا", // link to audio/video
-    choices: ["العلم", "نور", "الجميل", "احمد"],
-    answer: "في"
-  },
-  {
-    id: 22,
-    language: {
-      question: "ar",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "fill-blank",
-    question: "اين السؤال الثاني؟", // link to audio/video
-    choices: ["سيارة", "نور", "مرحبا", "احمد"],
-    answer: "اين"
-  },
-  {
-    id: 23,
-    language: {
-      question: "ar",
-      answer: "ar"
-    },
-    formate: "text",
-    type: "fill-blank",
-    question: "انا ادرس  اللغة العربية", // link to audio/video
-    choices: ["مشيت", "وقف", "الشمس", "صباحاً"],
-    answer: "ادرس"
-  }
-];
-
-const MultipleChoiceQuestionsCountTest = 4;
-const MultipleChoiceQuestionsTest = [
-  {
-    id: 1,
-    // type: "multiple-choice|fill-blank|make-sentence",
-    // formate: "text|audio|video",
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    type: "multiple-choice",
-    formate: "video",
-    question: "http://localhost:8000/path/to/video",
-    choices: [
-      "This is a text question",
-      "I want to go",
-      "You need to work hard",
-      "Goodbye"
-    ],
-    answer: "This is a text question"
-  },
-  {
-    id: 2,
-    // type: "multiple-choice|fill-blank|make-sentence",
-    // formate: "text|audio|video",
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    type: "multiple-choice",
-    formate: "audio",
-    question: "هذا سؤال كتابي",
-    choices: [
-      "This is a text question",
-      "I want to go",
-      "You need to work hard",
-      "Goodbye"
-    ],
-    answer: "This is a text question"
-  },
-  {
-    id: 3,
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    type: "multiple-choice",
-    formate: "audio",
-    question: "هذا سؤال صوتي",
-    choices: [
-      "what do you hear",
-      "Hi",
-      "That is an audio question",
-      "See you later"
-    ],
-    answer: "That is an audio question"
-  },
-  {
-    id: 4,
-    language: {
-      question: "ar",
-      answer: "en"
-    },
-    type: "multiple-choice",
-    formate: "text",
-    question: "مرحبا", // link to audio/video
-    choices: ["Day", "Hello", "Goodbye", "See you later"],
-    answer: "Hello"
-  }
-];
-
-let allQuestionsTest = [
-  // ...MakeSentenceQuestionsTest,
-  // ...FillBlankQuestionsTest,
-  ...MultipleChoiceQuestionsTest
-];
-const allQuestionsTestCount =
-  MakeSentenceQuestionsCountTest +
-  FillBlankQuestionsCountTest +
-  MultipleChoiceQuestionsCountTest;
-
-allQuestionsTest = _.shuffle(allQuestionsTest);
-
-/////////////////////////////////////////
 
 // COMMENTS: /////////////////////////////////////////////
 
