@@ -62,7 +62,7 @@ router.post("/:id/question", async (req, res) => {
 
     const lesson = await Lesson.updateOne(
       { _id: lessonId },
-      { $set: { questions: newQuestion } }
+      { $push: { questions: newQuestion } }
     );
 
     res.status(201).json(lesson);
