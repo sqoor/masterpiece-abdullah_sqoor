@@ -57,7 +57,7 @@ export default function Report(props) {
                     <h5 className="card-title text-center">
                       {question.question}
                     </h5>
-                    <h6 className="card-subtitle mb-2 text-muted text-center"></h6>
+                    {/* <h6 className="card-subtitle mb-2 text-muted text-center"></h6> */}
                     <p className="card-text">
                       <span className="border p-2 m-3 d-block bg-success text-light text-center rounded">
                         {question.answer}

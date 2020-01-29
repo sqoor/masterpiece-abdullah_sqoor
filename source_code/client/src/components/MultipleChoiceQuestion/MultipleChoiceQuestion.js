@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Question from "../Question/Question";
 import Choices from "../Choices/Choices";
 import ResultMessage from "../ResultMessage/ResultMessage";
-import QuestionInfo from "../QuestionInfo/QuestionInfo";
 
 export default class MultipleChoiceQuestion extends Component {
   state = {
@@ -13,11 +12,17 @@ export default class MultipleChoiceQuestion extends Component {
   };
 
   highlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "6px black solid";
+    const btn = this.state.choosedAnswerBtn;
+    btn.style.border = "6px black solid";
+
+    this.setState({ choosedAnswerBtn: btn });
   }
 
   removeHighlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "";
+    const btn = this.state.choosedAnswerBtn;
+    btn.style.border = "";
+
+    this.setState({ choosedAnswerBtn: btn });
   }
 
   checkAnswer = async e => {

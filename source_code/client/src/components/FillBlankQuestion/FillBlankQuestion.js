@@ -47,11 +47,17 @@ export default class FillBlankQuestion extends Component {
   };
 
   highlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "6px black solid";
+    const btn = this.state.choosedAnswerBtn;
+    btn.style.border = "6px black solid";
+
+    this.setState({ choosedAnswerBtn: btn });
   }
 
   removeHighlightChoosedAnswerBtn() {
-    this.state.choosedAnswerBtn.style.border = "";
+    const btn = this.state.choosedAnswerBtn;
+    btn.style.border = "";
+
+    this.setState({ choosedAnswerBtn: btn });
   }
 
   removeCorrectAnswerFromChoices() {

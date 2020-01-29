@@ -1,10 +1,7 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faVolumeUp, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-// import { faVolumeUp } from "@fortawesome/fontawesome-svg-core";
-// import { faVolumeUp } from "@fortawesome/react-fontawesome";
+import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 
 export default function Audio(props) {
   const { text, gender, autoplay, size, speed } = props;

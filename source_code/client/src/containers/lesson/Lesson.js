@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import _ from "lodash";
-import Axios from "axios";
 
 import Progress from "../../components/Progress/Progress";
 import MultipleChoiceQuestion from "../../components/MultipleChoiceQuestion/MultipleChoiceQuestion";
@@ -21,7 +20,7 @@ export default class Lesson extends Component {
       const lesson = this.props.location.state;
       this.setState({
         questionsCount: lesson.questions.length,
-        questions: lesson.questions
+        questions: _.shuffle(lesson.questions)
       });
     } catch (e) {
       console.log("Something went wrong", e);
@@ -68,7 +67,8 @@ export default class Lesson extends Component {
 
   passQuestion = () => {
     this.setState(prevState => {
-      const answeredQuestion = prevState.questions.shift();
+      // const answeredQuestion = prevState.questions.shift();
+      prevState.questions.shift();
       return {
         ...prevState,
         questions: prevState.questions

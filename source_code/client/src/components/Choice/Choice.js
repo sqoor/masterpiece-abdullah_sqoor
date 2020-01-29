@@ -27,7 +27,7 @@ export default function Choice(props) {
     <button
       onClick={clickHanlder}
       name={choice}
-      className={"col-5 m-1 btn" + " " + btnColor}
+      className={"col-5 m-1 btn " + btnColor}
       disabled={hasChoosedAnswer}
     >
       {choice}

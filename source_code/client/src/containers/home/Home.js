@@ -28,7 +28,7 @@ class Home extends Component {
           <nav className="side-menu">
             <ul>
               <li className="hidden active">
-                <a className="page-scroll" href="#page-top"></a>
+                <a className="page-scroll" href={"#page-top"}></a>
               </li>
               <li>
                 <a href="#home" className="page-scroll">
