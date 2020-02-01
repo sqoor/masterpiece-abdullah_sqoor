@@ -1,4 +1,128 @@
+const mongoose = require("mongoose");
+
 const Lesson = require("../models/lesson");
+
+exports.createLesson = async (req, res) => {
+  let createdLesson;
+
+  const newLesson = {
+    name: req.body.name,
+    image: req.body.image,
+    progress: 0,
+    questions: []
+  };
+
+  try {
+    createdLesson = await Lesson.create(newLesson);
+
+    return res.status(201).json(createdLesson);
+  } catch (e) {
+    console.log(":", e);
+
+    return res
+      .status(500)
+      .json("Something went wrong, error creating a new question");
+  }
+};
+
+exports.getLessons = async (req, res) => {
+  try {
+    const lessons = await Lesson.find({});
+    return res.status(200).json(lessons);
+  } catch (e) {
+    console.log("Error retreving all lessons", e);
+    return res.status(500).json("Something went wrong");
+  }
+};
+
+exports.addQuestion = async (req, res) => {
+  try {
+    const lessonId = req.params.id;
+    const newQuestion = {
+      _id: new mongoose.Types.ObjectId(),
+      language: {
+        question: req.body.language.question,
+        answer: req.body.language.answer
+      },
+      formate: req.body.formate,
+      type: req.body.type,
+      question: req.body.question,
+      choices: req.body.choices,
+      answer: req.body.answer
+    };
+
+    const result = await Lesson.updateOne(
+      { _id: lessonId },
+      { $push: { questions: newQuestion } }
+    );
+
+    // if(result.n === 1 && result.nModified === 1 && result.ok === 1)
+    res.status(201).json(result);
+  } catch (e) {
+    console.log("Error adding a question to a lesson", e);
+    res.status(500).json("Error adding a question to a lesson");
+  }
+};
+
+exports.updateLesson = async (req, res) => {
+  try {
+    const lessonId = req.params.id;
+    const updatedLesson = {
+      name: req.body.name,
+      image: req.body.image,
+      progress: req.body.progress
+    };
+
+    const result = await Lesson.updateOne({ _id: lessonId }, updatedLesson);
+    res.status(200).json(result);
+  } catch (e) {
+    console.log("Error updating lesson: ", e);
+    res.status(500).json("Error updating lesson");
+  }
+};
+
+exports.updateQuestion = async (req, res) => {
+  const lessonId = req.params.id;
+  const questionId = req.params.questionId;
+
+  const newQuestion = {
+    language: {
+      question: req.body.language.question,
+      answer: req.body.language.answer
+    },
+    formate: req.body.formate,
+    type: req.body.type,
+    question: req.body.question,
+    choices: req.body.choices,
+    answer: req.body.answer
+  };
+
+  const result = await Lesson.updateOne(
+    { _id: lessonId, "questions._id": questionId },
+    { $set: { "questions.$": newQuestion } }
+  );
+
+  return res.status(200).json(result);
+};
+
+exports.deleteLesson = async (req, res) => {
+  const lessonId = req.params.id;
+  const result = await Lesson.remove({ _id: lessonId });
+
+  return res.status(200).json(result);
+};
+
+exports.deleteQuestion = async (req, res) => {
+  const lessonId = req.params.id;
+  const questionId = req.params.questionId;
+
+  const result = await Lesson.update(
+    { _id: lessonId },
+    { $pull: { questions: { _id: questionId } } }
+  );
+
+  return res.status(200).json(result);
+};
 
 exports.getAll = (req, res) => {
   const lessons = [
