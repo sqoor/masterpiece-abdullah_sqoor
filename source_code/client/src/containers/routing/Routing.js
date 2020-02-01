@@ -8,6 +8,8 @@ import SignUp from "../register/SignUp";
 import Learn from "../learn/Learn";
 import Lesson from "../lesson/Lesson";
 import NotFound from "../not-found/NotFound";
+import Admin from "../admin/Admin";
+import LessonDetail from "../../components/Admin/LessonDetail";
 
 class Routing extends Component {
   render() {
@@ -21,6 +23,8 @@ class Routing extends Component {
             <Route path="/signup" excat component={SignUp} />
             <Route path="/learn" excat component={Learn} />
             <Route path="/lesson/:name" excat component={Lesson} />
+            <Route path="/admin/lessons/:id" excat component={LessonDetail} />
+            <Route path="/admin" excat component={Admin} />
             <Route component={NotFound} />
           </Switch>
         </Router>
