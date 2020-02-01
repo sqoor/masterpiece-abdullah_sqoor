@@ -38,11 +38,38 @@ export default class Admin extends Component {
       });
   };
 
+  updateLesson = (id, name, image) => {
+    Axios.put("/lessons/" + id, { name, image })
+      .then(res => {
+        if (res.data.n === 1 && res.data.nModified === 1 && res.data.ok === 1) {
+          this.setState({
+            lessons: this.state.lessons.map(lesson => {
+              if (lesson._id === id) {
+                lesson.name = name;
+                lesson.image = image;
+              }
+
+              return lesson;
+            })
+          });
+        } else {
+          console.log("Something went wrong, updating lesson");
+        }
+      })
+      .catch(error => {
+        console.log("Something went wrong, updating lesson", error);
+      });
+  };
+
   deleteLesson = lessonId => {
     Axios.delete(`/lessons/${lessonId}`)
       .then(res => {
-        if (res.status === 200) {
-          // check n deleted
+        console.log("res", res);
+        if (
+          res.data.n === 1 &&
+          res.data.ok === 1 &&
+          res.data.deletedCount === 1
+        ) {
           this.setState({
             lessons: this.state.lessons.filter(
               lesson => lesson._id !== lessonId
@@ -61,7 +88,7 @@ export default class Admin extends Component {
 
   render() {
     const { lessons } = this.state;
-    const { addLesson, deleteLesson } = this;
+    const { addLesson, updateLesson, deleteLesson } = this;
     return (
       <div>
         <h1>Content Manager Dashboard</h1>
@@ -70,7 +97,11 @@ export default class Admin extends Component {
           adding content; the questions and their answers for the users.
         </p>
         <AddLesson addLesson={addLesson} />
-        <LessonsList lessons={lessons} deleteLesson={deleteLesson} />
+        <LessonsList
+          lessons={lessons}
+          deleteLesson={deleteLesson}
+          updateLesson={updateLesson}
+        />
       </div>
     );
   }

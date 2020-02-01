@@ -1,9 +1,10 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import EditLesson from "./EditLesson";
 
 export default function LessonsList(props) {
-  const { lessons } = props;
+  const { lessons, updateLesson } = props;
 
   const deleteLesson = (lessonId, lessonName) => {
     if (window.confirm(`You will delete "${lessonName}" lesson, procced?`))
@@ -23,8 +24,11 @@ export default function LessonsList(props) {
               >
                 Delete
               </button>
-              <button className="btn btn-warning btn-sm m-1">Edit</button>
-
+              <EditLesson
+                className="btn btn-warning btn-sm m-1"
+                updateLesson={updateLesson}
+                {...lesson}
+              />
               <Link
                 target="_blank"
                 className="btn btn-info btn-sm m-1"
