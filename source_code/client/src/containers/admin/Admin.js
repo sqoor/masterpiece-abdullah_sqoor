@@ -10,6 +10,22 @@ export default class Admin extends Component {
     lessons: []
   };
 
+  addLesson = newLesson => {
+    console.log(newLesson);
+    Axios.post("/lessons", newLesson).then(res => {
+      if (res.status === 201) {
+        this.setState(prevState => {
+          prevState.lessons.push(res.data);
+          return {
+            ...prevState
+          };
+        });
+      } else {
+        console.log("Something went wrong adding new lesson", res);
+      }
+    });
+  };
+
   getLessons = () => {
     Axios.get("/lessons")
       .then(res => {
@@ -45,7 +61,7 @@ export default class Admin extends Component {
 
   render() {
     const { lessons } = this.state;
-    const { deleteLesson } = this;
+    const { addLesson, deleteLesson } = this;
     return (
       <div>
         <h1>Content Manager Dashboard</h1>
@@ -53,7 +69,7 @@ export default class Admin extends Component {
           This page only for authorized people, which will be responsible for
           adding content; the questions and their answers for the users.
         </p>
-        <AddLesson />
+        <AddLesson addLesson={addLesson} />
         <LessonsList lessons={lessons} deleteLesson={deleteLesson} />
       </div>
     );
