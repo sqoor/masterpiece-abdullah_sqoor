@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import EditLesson from "./EditLesson";
 
 export default function LessonsList(props) {
-  const { lessons, updateLesson } = props;
+  const { lessons, updateLesson, addQuestion } = props;
 
   const deleteLesson = (lessonId, lessonName) => {
     if (window.confirm(`You will delete "${lessonName}" lesson, procced?`))
@@ -30,9 +30,11 @@ export default function LessonsList(props) {
                 {...lesson}
               />
               <Link
-                target="_blank"
                 className="btn btn-info btn-sm m-1"
-                to={`/admin/lessons/${lesson._id}`}
+                to={{
+                  pathname: `/admin/lessons/${lesson._id}`,
+                  state: { lesson }
+                }}
               >
                 Details
               </Link>

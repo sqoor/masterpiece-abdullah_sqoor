@@ -82,13 +82,19 @@ export default class Admin extends Component {
       });
   };
 
+  // cannot be cloned via route, use inner api call inside AddQuestion
+  addQuestion = newQuestion => {
+    console.log("add question from admin");
+    console.log("New Question", newQuestion);
+  };
+
   componentDidMount() {
     this.getLessons();
   }
 
   render() {
     const { lessons } = this.state;
-    const { addLesson, updateLesson, deleteLesson } = this;
+    const { addLesson, addQuestion, updateLesson, deleteLesson } = this;
     return (
       <div>
         <h1>Content Manager Dashboard</h1>
@@ -101,6 +107,7 @@ export default class Admin extends Component {
           lessons={lessons}
           deleteLesson={deleteLesson}
           updateLesson={updateLesson}
+          addQuestion={addQuestion}
         />
       </div>
     );
