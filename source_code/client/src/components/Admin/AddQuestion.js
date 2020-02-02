@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Axios from "axios";
 
 export default class AddQuestion extends Component {
   iniState = {
@@ -84,7 +85,8 @@ export default class AddQuestion extends Component {
       answer
     };
 
-    this.props.addQuestion(newQuestion);
+    this.props(newQuestion);
+    console.log(newQuestion);
     this.clear();
   };
 

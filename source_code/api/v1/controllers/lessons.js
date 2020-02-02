@@ -35,6 +35,13 @@ exports.getLessons = async (req, res) => {
   }
 };
 
+exports.getOneLesson = async (req, res) => {
+  const lessonId = req.params.id;
+  const lesson = await Lesson.findById(lessonId);
+
+  res.status(200).json(lesson);
+};
+
 exports.addQuestion = async (req, res) => {
   try {
     const lessonId = req.params.id;

@@ -33,7 +33,7 @@ export default function LessonsList(props) {
                 className="btn btn-info btn-sm m-1"
                 to={{
                   pathname: `/admin/lessons/${lesson._id}`,
-                  state: { lesson }
+                  state: lesson 
                 }}
               >
                 Details

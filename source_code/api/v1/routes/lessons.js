@@ -5,6 +5,7 @@ const checkAuth = require("../middleware/check-auth");
 const {
   createLesson,
   getLessons,
+  getOneLesson,
   addQuestion,
   updateLesson,
   updateQuestion,
@@ -14,6 +15,7 @@ const {
 
 router.post("/", createLesson);
 router.get("/", getLessons);
+router.get("/:id", getOneLesson);
 router.post("/:id/question", addQuestion);
 router.put("/:id", updateLesson);
 router.put("/:id/questions/:questionId", updateQuestion);
