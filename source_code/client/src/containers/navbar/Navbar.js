@@ -35,25 +35,27 @@ class Navbar extends Component {
             <li className="nav-item">
               {authenticated ? (
                 <Link className="nav-link hvr-grow" to="/learn">
-                  Learn
+                  Practice
                 </Link>
               ) : null}
             </li>
             <li className="nav-item hvr-grow">
               {authenticated ? (
                 <Link className="nav-link" to="/write">
-                  Write
+                  Lessons
                 </Link>
               ) : null}
             </li>
 
-            <li className="nav-item hvr-grow">
+            {/* 
+              <li className="nav-item hvr-grow">
               {authenticated ? (
                 <Link className="nav-link" to="">
                   Read/Listen
                 </Link>
               ) : null}
-            </li>
+              </li> 
+            */}
           </ul>
           <form className="form-inline mt-2 mt-md-0 nav navbar-nav navbar-right">
             <input
