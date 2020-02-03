@@ -10,6 +10,7 @@ import Lesson from "../lesson/Lesson";
 import NotFound from "../not-found/NotFound";
 import Admin from "../admin/Admin";
 import LessonDetail from "../../components/Admin/LessonDetail";
+import Write from "../Write/Write";
 
 class Routing extends Component {
   render() {
@@ -25,6 +26,7 @@ class Routing extends Component {
             <Route path="/lesson/:name" excat component={Lesson} />
             <Route path="/admin/lessons/:id" excat component={LessonDetail} />
             <Route path="/admin" excat component={Admin} />
+            <Route path="/write" excat component={Write} />
             <Route component={NotFound} />
           </Switch>
         </Router>

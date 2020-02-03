@@ -41,7 +41,7 @@ class Navbar extends Component {
             </li>
             <li className="nav-item hvr-grow">
               {authenticated ? (
-                <Link className="nav-link" to="">
+                <Link className="nav-link" to="/write">
                   Write
                 </Link>
               ) : null}
