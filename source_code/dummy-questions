@@ -49,7 +49,7 @@ const MakeSentenceQuestionsTest = [
     type: "make-sentence",
     question: "انا ادرس  اللغة العربية",
     choices: ["He", "when", "there", "sometimes"],
-    answer: "I am styding the Arabic Languge"
+    answer: "I am stuyding the Arabic Language"
   },
   {
     id: 34,

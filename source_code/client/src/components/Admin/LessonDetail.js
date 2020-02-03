@@ -80,7 +80,7 @@ export default class LessonDetail extends Component {
             return (
               <div
                 key={question._id ? question._id : index}
-                className="col-3 card m-2"
+                className="col-3 col-md-4 col-sm card m-2"
               >
                 <div className="card-header">
                   <button
@@ -103,9 +103,7 @@ export default class LessonDetail extends Component {
 
                 <p className="p-1">Question Type: {question.type}</p>
 
-                <p className="p-1">
-                  Question Format: {question.formate}
-                </p>
+                <p className="p-1">Question Format: {question.formate}</p>
 
                 <div className="p-1">
                   Choices:

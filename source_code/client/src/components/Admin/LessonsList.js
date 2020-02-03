@@ -15,7 +15,7 @@ export default function LessonsList(props) {
     <div className="container-fluid mt-3">
       <div className="row">
         {lessons.map(lesson => (
-          <div className="col-3 my-3" key={lesson._id}>
+          <div className="col-3 col-md-6 col-sm my-3" key={lesson._id}>
             {lesson.name}
             <div>
               <button

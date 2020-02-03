@@ -15,7 +15,15 @@ export default class AddQuestion extends Component {
   state = this.iniState;
 
   clear = () => {
-    this.setState(this.iniState);
+    // this.setState({
+    //   languageQuestion: "",
+    //   languageAnswer: "",
+    //   formate: "",
+    //   type: "",
+    //   question: "",
+    //   choices: [],
+    //   answer: ""
+    // });
   };
 
   changeHandler = e => {
@@ -218,7 +226,7 @@ export default class AddQuestion extends Component {
                     <option>Type</option>
                     <option value="fill-blank">Fill Blank</option>
                     <option value="multiple-choice">Multiple Choice</option>
-                    <option value="complete-sentence">Complete Sentence</option>
+                    <option value="make-sentence">Make Sentence</option>
                   </select>
 
                   <div className="form-group mt-4">
