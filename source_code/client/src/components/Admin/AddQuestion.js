@@ -5,7 +5,7 @@ export default class AddQuestion extends Component {
   iniState = {
     languageQuestion: "",
     languageAnswer: "",
-    format: "",
+    formate: "",
     type: "",
     question: "",
     choices: [],
@@ -66,7 +66,7 @@ export default class AddQuestion extends Component {
     const {
       languageQuestion,
       languageAnswer,
-      format,
+      formate,
       type,
       question,
       choices,
@@ -78,15 +78,14 @@ export default class AddQuestion extends Component {
         question: languageQuestion,
         answer: languageAnswer
       },
-      format,
+      formate,
       type,
       question,
       choices,
       answer
     };
-
-    this.props(newQuestion);
-    console.log(newQuestion);
+    console.log("formate", formate);
+    this.props.addQuestion(newQuestion);
     this.clear();
   };
 
@@ -95,7 +94,7 @@ export default class AddQuestion extends Component {
     const {
       languageQuestion,
       languageAnswer,
-      format,
+      formate,
       type,
       question,
       choices,
@@ -191,12 +190,12 @@ export default class AddQuestion extends Component {
                     <option value="en">English</option>
                   </select>
 
-                  <label className="mt-4" htmlFor="format">
+                  <label className="mt-4" htmlFor="formate">
                     Question Format
                   </label>
                   <select
-                    id="format"
-                    name="format"
+                    id="formate"
+                    name="formate"
                     className="form-control"
                     onChange={changeHandler}
                   >

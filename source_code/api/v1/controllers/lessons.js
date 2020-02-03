@@ -63,8 +63,7 @@ exports.addQuestion = async (req, res) => {
       { $push: { questions: newQuestion } }
     );
 
-    // if(result.n === 1 && result.nModified === 1 && result.ok === 1)
-    res.status(201).json(result);
+    res.status(201).json({ result, newQuestion });
   } catch (e) {
     console.log("Error adding a question to a lesson", e);
     res.status(500).json("Error adding a question to a lesson");
