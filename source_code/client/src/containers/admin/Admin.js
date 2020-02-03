@@ -89,6 +89,9 @@ export default class Admin extends Component {
   };
 
   componentDidMount() {
+    if (this.props.location.state) {
+      if (!this.props.location.state.admin) this.props.history.push("/login");
+    } else this.props.history.push("/login");
     this.getLessons();
   }
 
@@ -96,9 +99,9 @@ export default class Admin extends Component {
     const { lessons } = this.state;
     const { addLesson, addQuestion, updateLesson, deleteLesson } = this;
     return (
-      <div>
-        <h1>Content Manager Dashboard</h1>
-        <p>
+      <div className="container mt-3">
+        <h1 className="text-muted text-center">Content Manager Dashboard</h1>
+        <p className="text-muted mb-5">
           This page only for authorized people, which will be responsible for
           adding content; the questions and their answers for the users.
         </p>

@@ -114,9 +114,10 @@ class Login extends Component {
   submitHandler = e => {
     e.preventDefault();
 
-    const { requestApi, state } = this;
+    const { requestApi, redirectAdmin, state } = this;
 
     if (this.validator.allValid()) {
+      redirectAdmin(state);
       requestApi(state);
     } else {
       this.validator.showMessages();
@@ -129,6 +130,18 @@ class Login extends Component {
     this.setState({
       showPassword: !this.state.showPassword
     });
+  };
+
+  redirectAdmin = credentials => {
+    console.log("credentials", credentials);
+    if (
+      credentials.email === "admin@wasla.com" &&
+      credentials.password === "123456"
+    )
+      this.props.history.push({
+        pathname: "/admin",
+        state: { admin: true }
+      }); // send data to auth admin
   };
 
   render() {

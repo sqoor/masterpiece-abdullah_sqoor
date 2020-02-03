@@ -12,7 +12,7 @@ export default function LessonsList(props) {
   };
 
   return (
-    <div className="container-fluid mt-5">
+    <div className="container-fluid mt-3">
       <div className="row">
         {lessons.map(lesson => (
           <div className="col-3 my-3" key={lesson._id}>
